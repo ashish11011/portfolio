@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio</title>
+
+    <!-- FOnt aweson cdn linl -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+
+    <!-- costom css file link -->
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <!-- header section start -->
+
+    <header>
+      <div id="menu-bars" class="fas fa-bars"></div>
+
+      <nav class="navbar">
+        <a href="#home">home</a>
+        <a href="#about">about</a>
+        <a href="#services">services</a>
+        <a href="#portfolio">portfolio</a>
+        <a href="#blog">blog</a>
+        <a href="#contact">contact</a>
+      </nav>
+    </header>
+
+    <!-- header section ends -->
+
+    <!-- homesection starts -->
+
+    <section id="home" class="home">
+      <div id="particles-js"></div>
+      <div class="content">
+        <img class="tilt" src="./images/profile.jpg" alt="" />
+        <h3>Ashish <span>Bishnoi</span></h3>
+        <p>i am a <span class="typing-text"></span></p>
+        <a href="#about" class="btn">about me</a>
+      </div>
+    </section>
+
+    <!-- homesection ends -->
+
+    <!-- about section starts -->
+
+    <section class="about" id="about">
+      <h1 class="heading">about <span>me </span></h1>
+
+      <div class="row">
+        <div class="image">
+          <img class="tilt" src="./images/profile.jpg" alt="" />
+        </div>
+
+        <div class="content">
+          <h3>my name is <span> ashish bishnoi </span></h3>
+          <p class="info">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+            dignissimos consequatur deleniti error officiis laborum
+            reprehenderit inventore beatae rerum itaque ratione nemo deserunt
+            voluptate ducimus repellendus in, molestiae nesciunt quisquam!
+          </p>
+          <div class="box-container">
+            <div class="box">
+              <p><span> age: </span> 19</p>
+              <p><span> gender: </span> male</p>
+              <p><span> experience: </span> 6 months</p>
+              <p><span> freelance: </span> available</p>
+            </div>
+
+            <div class="box">
+              <p><span> language: </span> hindi / english</p>
+              <p><span> phone: </span> +91 6239565852</p>
+              <p><span> email: </span> macsingh110@gmail.com</p>
+              <p><span> freelance: </span> available</p>
+            </div>
+          </div>
+          <a href="#" class="btn">download CV</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- about section ends -->
+
+    <!-- java script part -->
+
+    <!-- typed.js link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+
+    <!-- particles.js link -->
+    <script src="./js/particles.min.js"></script>
+    <script src="./js/app.js"></script>
+
+    <!-- vanilla-title.js link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+    <script>
+      let menu = document.querySelector("#menu-bars");
+      let header = document.querySelector("header");
+
+      menu.onclick = () => {
+        menu.classList.toggle("fa-times");
+        header.classList.toggle("active");
+      };
+
+      window.onscroll = () => {
+        menu.classList.remove("fa-times");
+        header.classList.remove("active");
+      };
+
+      var typed = new Typed(".typing-text", {
+        strings: ["front end developer", "back end developer"],
+        loop: true,
+        typeSpeed: 150,
+      });
+
+      VanillaTilt.init(document.querySelectorAll(".tilt"), {
+        max: 25,
+      });
+    </script>
+  </body>
+</html>
