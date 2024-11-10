@@ -5,12 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import whatsappIcon from "./../../public/whatsappIcon.svg";
-import spotifyIcon from "./../../public/spotifyIcon.svg";
 import blueTick from "./../../public/tickBlueIcon.svg";
 import goldTick from "./../../public/tickGoldIcon.svg";
-import grayTick from "./../../public/tickGrayIcon.svg";
-// import emailList from "./../../public/emails.js";
-// import fs from "fs";
+import { motion } from "framer-motion";
+import { Github } from "lucide-react";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -22,7 +21,7 @@ export default function Home() {
         <ProjectSection />
         <Experience />
         <SubscriptionSection />
-        <Spotify />
+
         <Footer />
       </div>
     </div>
@@ -63,10 +62,11 @@ const HeroSection = () => {
         </span>
         ,{" "}
         <Link
-          href="https://saaskart.co"
+          href="https://cozzycorner.in"
+          target="_blank"
           className=" py-1.5 px-3 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 font-semibold"
         >
-          Saaskart
+          Cozzy Corner
         </Link>{" "}
         and{" "}
         <span className=" font-semibold text-gray-800 dark:text-gray-300">
@@ -84,47 +84,86 @@ const HeroSection = () => {
 };
 
 const ProjectSection = () => {
+  const [showProjectCount, setShowProjectCount] = useState(4);
+  const [showMoreText, setShowMoreText] = useState("View More");
+  useEffect(() => {
+    if (showProjectCount === projectsData.length) {
+      setShowMoreText("View Less");
+    } else {
+      setShowMoreText("View More");
+    }
+  });
   return (
-    <div className=" max-w-3xl mt-4 w-full mx-auto flex flex-col gap-6">
+    <div
+      id="projects"
+      className=" max-w-3xl mt-4 w-full mx-auto flex flex-col gap-6"
+    >
       <div className=" sm:text-5xl text-3xl font-semibold text-gray-800 dark:text-gray-200 flex">
         Projects{" "}
       </div>
       <div className=" w-full flex gap-4 flex-wrap">
-        {projectsData.map((project) => {
+        {projectsData.map((project: any, index: number) => {
+          if (index >= showProjectCount) {
+            return;
+          }
           return <ProjectCard project={project} />;
         })}
+      </div>
+      <div
+        onClick={() =>
+          setShowProjectCount((prev) =>
+            prev === projectsData.length ? 4 : projectsData.length
+          )
+        }
+        className=" w-fit px-4 cursor-pointer mx-auto bg-white dark:bg-neutral-700 dark:text-white dark:border-gray-500 text-gray-600 hover:text-gray-900 rounded select-none hover:bg-gray-100 duration-200 py-2 border"
+      >
+        {showMoreText}
       </div>
     </div>
   );
 };
-
 const ProjectCard = (props: any) => {
-  const { logo, name, desc, url, github, techs } = props.project;
+  const { logo, name, desc, techs, github } = props.project;
+
   return (
-    <div className=" sm:w-[calc(50%-0.5rem)] w-full border flex flex-col sm:gap-8 gap-6 p-4 rounded-lg">
-      <div className="flex gap-4">
-        {logo && (
-          <Image
-            src={logo}
-            width={40}
-            height={40}
-            alt="Picture of the author"
-          />
-        )}
-        <div className=" text-2xl text-gray-800 dark:text-gray-200 capitalize font-semibold">
-          {name}
+    <div className="sm:w-[calc(50%-0.5rem)] hover:shadow-lg dark:bg-emerald-900/20 dark:border-gray-600 cursor-pointer duration-200 w-full border flex flex-col sm:gap-8 gap-6 p-4 rounded-lg">
+      <div className="flex gap-4 justify-between">
+        <div className=" flex gap-4 items-center">
+          {logo && (
+            <Image
+              className=" rounded"
+              src={logo}
+              width={40}
+              height={40}
+              alt="Project logo"
+            />
+          )}
+          <div className="text-2xl line-clamp-2 text-gray-800 dark:text-gray-200 capitalize font-semibold">
+            {name}
+          </div>
         </div>
+        {github && (
+          <Link href={github} target="_blank">
+            {" "}
+            <Github
+              color="#888"
+              className=" hover:border-gray-400 hover:dark:border-gray-400 dark:border-gray-500 duration-200 hover:scale-105 p-1 border rounded-full size-8 shrink-0"
+            />
+          </Link>
+        )}
       </div>
 
-      <div className=" text-gray-500 dark:text-gray-400 text-sm tracking-wider ">
-        {" "}
+      <div className="text-gray-500 dark:text-gray-400 text-sm tracking-wider">
         {desc}
       </div>
 
-      <div className=" flex gap-2 flex-wrap">
-        {techs.map((tech: string) => {
+      <div className="flex gap-2 flex-wrap">
+        {techs.map((tech: string, index: number) => {
           return (
-            <div className=" py-1.5 px-3 bg-gray-100 dark:bg-gray-700 text-xs rounded text-gray-800 dark:text-gray-200 font-semibold">
+            <div
+              key={index}
+              className="py-1.5 px-3 bg-gray-100 dark:bg-gray-700 text-xs rounded text-gray-800 dark:text-gray-200 font-semibold"
+            >
               {tech}
             </div>
           );
@@ -135,6 +174,22 @@ const ProjectCard = (props: any) => {
 };
 
 const projectsData = [
+  {
+    logo: "https://s3.ap-south-1.amazonaws.com/cozzy.corner/cozzy-corner-logo-dark.png",
+    name: "Cozzy Corner",
+    desc: "Cozzy Corner is your go-to spot for high-quality anime action figures. Discover a curated collection that brings your favorite characters to life!",
+    url: "https://cozzycorner.in",
+    github: "https://github.com/ashish11011/anime",
+    techs: ["Nextjs", "Tailwind", "Typescript", "MongoDB", "AWS", "Vercel"],
+  },
+  {
+    logo: "",
+    name: "Solana Wallet",
+    desc: "Build flux wallet where a user can add and create its Solana balance ",
+    url: "https://solana-wallet-sandy-tau.vercel.app/",
+    github: "https://github.com/ashish11011/solana-wallet",
+    techs: ["Nextjs", "Tailwind", "Typescript", "Alchemy", "Vercel"],
+  },
   {
     logo: "",
     name: " Real-time chat X",
@@ -163,14 +218,26 @@ const projectsData = [
 
 const Experience = () => {
   return (
-    <div className=" max-w-3xl mx-auto w-full flex flex-col gap-6">
-      <div className=" sm:text-5xl text-3xl font-semibold text-gray-800 dark:text-gray-200">
+    <div
+      id="experience"
+      className="max-w-3xl mx-auto w-full flex flex-col gap-6"
+    >
+      <div className="sm:text-5xl text-3xl font-semibold text-gray-800 dark:text-gray-200">
         Experience
       </div>
-      <div className=" flex flex-col gap-10">
-        {experienceData.map((data) => {
-          return <ExperienceCard data={data} />;
-        })}
+      <div className="flex flex-col gap-10">
+        {experienceData.map((data, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0.7, scaleX: 0.9 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className=""
+          >
+            <ExperienceCard data={data} />
+          </motion.div>
+        ))}
       </div>
     </div>
   );
@@ -188,7 +255,7 @@ const ExperienceCard = (props: any) => {
     time,
   } = props.data;
   return (
-    <div className="flex gap-3 w-full">
+    <motion.div className="flex gap-3 w-full">
       <div className=" pt-1.5">
         <Image
           className=""
@@ -201,7 +268,9 @@ const ExperienceCard = (props: any) => {
       <div className=" flex flex-col gap-4 w-full">
         <div className=" flex gap-0 flex-col sm:flex-row sm:justify-between sm:items-center">
           <div className=" text-lg font-semibold dark:text-gray-200 flex gap-2 items-center">
-            <div className="">{company}</div>
+            <Link target="_blank" href={companyLink}>
+              {company}
+            </Link>
             {current && (
               <span className=" text-sm text-green-400  ">current</span>
             )}
@@ -213,7 +282,7 @@ const ExperienceCard = (props: any) => {
         <div className=" text-gray-500 dark:text-gray-400">{description}</div>
         {/* <div className=" text-gray-500 text-xs">{time}</div> */}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -222,10 +291,10 @@ const experienceData = [
     logo: "",
     company: "Saaskart",
     isGolden: false,
-    companyLink: "",
+    companyLink: "https://saaskart.in",
     description: "Building a platform for buying and selling Saas products",
     position: "Full Stack Developer",
-    current: true,
+    current: false,
     time: "June 2024 - Present",
   },
   {
@@ -349,77 +418,6 @@ const SubscriptionSection = () => {
           {formResponse}
         </div>
       </form>
-    </div>
-  );
-};
-
-const Footer = () => {
-  return (
-    <div className=" min-h-24 w-full bg-gra">
-      <div className=" mx-auto max-w-3xl w-full flex flex-col sm:flex-row gap-6 py-8 border-t dark:border-gray-600 px-2 sm:px-0">
-        {footerData.map((data) => {
-          return (
-            <div className=" w-full flex flex-col gap-6">
-              {data.map((item) => {
-                return (
-                  <Link
-                    href={item.link}
-                    target="_blank"
-                    className=" hover:text-gray-900 dark:hover:text-gray-200  cursor-pointer duration-300 text-gray-600 dark:text-gray-400 w-fit transition-all"
-                  >
-                    {item.name}
-                  </Link>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
-
-const footerData = [
-  [
-    { name: "Home", link: "#" },
-    { name: "Dashboard", link: "#" },
-    { name: "Profile", link: "#" },
-    { name: "About", link: "#" },
-    { name: "Links", link: "#" },
-  ],
-  [
-    { name: "GitHub", link: "https://github.com/ashish11011" },
-    { name: "LinkedIn", link: "https://www.linkedin.com/in/ashish-bishnoi/" },
-    { name: "Twitter", link: "https://x.com/bishnoi11011" },
-    // { name: "Instagram", link: "https://instagram.com" },
-  ],
-  [
-    { name: "Resources", link: "#" },
-    {
-      name: "Twitter DM",
-      link: "https://twitter.com/messages/compose?recipient_id=bishnoi11011&text=Hi%20Ashish%20Bishnoi",
-    },
-    { name: "Live Demos", link: "#" },
-    { name: "Design Inspiration", link: "#" },
-  ],
-];
-
-const Spotify = () => {
-  return (
-    <div className=" max-w-3xl w-full mx-auto -mb-8 flex gap-2">
-      <Image
-        src={spotifyIcon}
-        width={25}
-        height={25}
-        alt="spotify icon"
-      ></Image>
-      <Link
-        href={"https://open.spotify.com/user/9vpkggyb99w31vy2yj0ge0g3o"}
-        target="_blank"
-        className=" dark:text-gray-400"
-      >
-        Spotify
-      </Link>
     </div>
   );
 };

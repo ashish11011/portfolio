@@ -1,3 +1,5 @@
+"use client";
+
 import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -20,17 +22,13 @@ const NavBar = (params: any) => {
       }
     };
 
-    // Add event listener for scroll
     window.addEventListener("scroll", handleScroll);
 
-    // Clean up event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
   return (
-    //
-    // Public Nav Bar
     <div className="backdrop-blur fixed top-0 left-1/2 -translate-x-1/2 w-full z-50">
       <div
         className={` ${
@@ -59,18 +57,32 @@ const NavBar = (params: any) => {
           >
             Home
           </Link>
-          <Link
-            href="#"
+          <div
+            onClick={() => {
+              const projects = document.getElementById("projects");
+              if (projects) {
+                const offsetTop =
+                  projects.getBoundingClientRect().top + window.scrollY - 150;
+                window.scrollTo({ top: offsetTop, behavior: "smooth" });
+              }
+            }}
             className=" cursor-pointer text-gray-600 py-2 px-3 duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white text-sm font-semibold"
           >
             Projects
-          </Link>
-          <Link
-            href="#"
+          </div>
+          <div
+            onClick={() => {
+              const experience = document.getElementById("experience");
+              if (experience) {
+                const offsetTop =
+                  experience.getBoundingClientRect().top + window.scrollY - 150;
+                window.scrollTo({ top: offsetTop, behavior: "smooth" });
+              }
+            }}
             className=" cursor-pointer text-gray-600 py-2 px-3 duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white text-sm font-semibold"
           >
             Experience
-          </Link>
+          </div>
         </div>
       </div>
     </div>

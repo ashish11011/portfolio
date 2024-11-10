@@ -12,7 +12,7 @@ const ShowMails = (props: any) => {
     const date = new Date(isoString);
 
     // Format options for a readable date and time
-    const options = {
+    const options: any = {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -38,10 +38,9 @@ const ShowMails = (props: any) => {
     })
       .then((res) => res.json())
       .then((res) => {
+        router.refresh();
         console.log(res);
       });
-    router.refresh();
-    console.log(email);
   };
 
   return (
