@@ -10,6 +10,7 @@ import goldTick from "./../../public/tickGoldIcon.svg";
 import { motion } from "framer-motion";
 import { Github } from "lucide-react";
 import { Footer } from "@/components/footer";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -123,10 +124,16 @@ const ProjectSection = () => {
   );
 };
 const ProjectCard = (props: any) => {
-  const { logo, name, desc, techs, github } = props.project;
-
+  const { logo, name, desc, techs, github, url } = props.project;
+  const router = useRouter();
+  function handleProjectClick(url: string) {
+    router.push(url);
+  }
   return (
-    <div className="sm:w-[calc(50%-0.5rem)] hover:shadow-lg dark:bg-emerald-900/20 dark:border-gray-600 cursor-pointer duration-200 w-full border flex flex-col sm:gap-8 gap-6 p-4 rounded-lg">
+    <div
+      onClick={() => handleProjectClick(url)}
+      className="sm:w-[calc(50%-0.5rem)] hover:shadow-lg dark:bg-emerald-900/20 dark:border-gray-600 cursor-pointer duration-200 w-full border flex flex-col sm:gap-8 gap-6 p-4 rounded-lg"
+    >
       <div className="flex gap-4 justify-between">
         <div className=" flex gap-4 items-center">
           {logo && (
@@ -179,6 +186,14 @@ const projectsData = [
     name: "Cozzy Corner",
     desc: "Cozzy Corner is your go-to spot for high-quality anime action figures. Discover a curated collection that brings your favorite characters to life!",
     url: "https://cozzycorner.in",
+    github: "https://github.com/ashish11011/anime",
+    techs: ["Nextjs", "Tailwind", "Typescript", "MongoDB", "AWS", "Vercel"],
+  },
+  {
+    logo: "https://s3.ap-south-1.amazonaws.com/chal.chitrakaar/logo+dark.PNG",
+    name: "Cahl Chitrakaar",
+    desc: "Chal Chitrakaar is a portfolio website for a photographer showcasing expertise in wedding shoots, corporate photography, and a diverse range of professional photography services.",
+    url: "https://www.chalchitrakaar.in/",
     github: "https://github.com/ashish11011/anime",
     techs: ["Nextjs", "Tailwind", "Typescript", "MongoDB", "AWS", "Vercel"],
   },
