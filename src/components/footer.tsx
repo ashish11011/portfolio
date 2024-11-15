@@ -51,7 +51,7 @@ const footerData = [
       name: "Twitter DM",
       link: "https://twitter.com/messages/compose?recipient_id=bishnoi11011&text=Hi%20Ashish%20Bishnoi",
     },
-    { name: "Freelancing", link: "/freelancing" },
+    // { name: "Freelancing", link: "/freelancing" },
     {
       name: "Design Inspiration",
       link: "https://majestic-potential-d88.notion.site/13ac368d3f0b8009a24ad5e8cd37d8b9?pvs=4",
