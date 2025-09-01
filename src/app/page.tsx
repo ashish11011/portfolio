@@ -304,13 +304,23 @@ const ExperienceCard = (props: any) => {
 const experienceData = [
   {
     logo: "",
+    company: "Av technosys",
+    isGolden: false,
+    companyLink: "https://avtechnosys.com",
+    description: "Building Saas products and web apps",
+    position: "Full Stack Developer",
+    current: false,
+    time: "Jan 2025 - Present",
+  },
+  {
+    logo: "",
     company: "Saaskart",
     isGolden: false,
     companyLink: "https://saaskart.in",
     description: "Building a platform for buying and selling Saas products",
     position: "Full Stack Developer",
     current: false,
-    time: "June 2024 - Present",
+    time: "June 2024",
   },
   {
     logo: "",
