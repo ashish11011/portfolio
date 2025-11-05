@@ -57,19 +57,20 @@ const NavBar = (params: any) => {
           >
             Home
           </Link>
-          <div
-            onClick={() => {
-              const projects = document.getElementById("projects");
-              if (projects) {
-                const offsetTop =
-                  projects.getBoundingClientRect().top + window.scrollY - 150;
-                window.scrollTo({ top: offsetTop, behavior: "smooth" });
-              }
-            }}
+          <Link
+            href="/projects"
+            // onClick={() => {
+            //   const projects = document.getElementById("projects");
+            //   if (projects) {
+            //     const offsetTop =
+            //       projects.getBoundingClientRect().top + window.scrollY - 150;
+            //     window.scrollTo({ top: offsetTop, behavior: "smooth" });
+            //   }
+            // }}
             className=" cursor-pointer text-gray-600 py-2 px-3 duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white text-sm font-semibold"
           >
             Projects
-          </div>
+          </Link>
           <div
             onClick={() => {
               const experience = document.getElementById("experience");

@@ -117,7 +117,7 @@ const ProjectSection = () => {
         })}
       </div>
       <Link
-        href={"/freelancing"}
+        href={"/projects"}
         className=" w-fit px-4 cursor-pointer mx-auto bg-white dark:bg-neutral-700 dark:text-white dark:border-gray-500 text-gray-600 hover:text-gray-900 rounded select-none hover:bg-gray-100 duration-200 py-2 border"
       >
         View More
