@@ -60,7 +60,7 @@ const HeroSection = () => {
       <div className=" w-full text-gray-600 text-xl max-w-2xl dark:text-gray-200">
         Software Engineer & Full Stack Developer - building modern{" "}
         <span className=" font-semibold">
-          SaaS products, scalable web apps Building
+          SAAS products, Scalable Web Apps Building
         </span>
         {/* <span className=" py-1.5 px-3 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 font-semibold">
           Web3
