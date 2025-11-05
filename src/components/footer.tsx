@@ -32,7 +32,8 @@ export const Footer = () => {
 
 const footerData = [
   [
-    { name: "Home", link: "#" },
+    { name: "Home", link: "/" },
+    { name: "Freelancing", link: "/freelancing" },
     // { name: "Dashboard", link: "#" },
     { name: "Resume", link: "#" },
     {

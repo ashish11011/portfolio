@@ -33,9 +33,10 @@ const HeroSection = () => {
   return (
     <div className=" flex gap-6 flex-col max-w-3xl w-full mx-auto mt-40">
       <div className="flex justify-between flex-col-reverse sm:flex-row  gap-6 w-full">
-        <div className=" sm:text-5xl text-4xl font-semibold flex gap-2 dark:text-gray-200 ">
-          Ashish <span className="text-gray-500">Bishnoi</span>
-        </div>
+        <p className="  pt-2 sm:text-4xl text-4xl text-gray-500 font-semibold gap-2 dark:text-gray-200 ">
+          👋 Hi, I’m <br className=" block sm:hidden" />
+          <span className="text-black">Ashish Bishnoi</span>
+        </p>
         <div className="">
           <div className="p-2 relative w-fit translate-x-2/3 sm:translate-x-0 ">
             <Image
@@ -56,9 +57,12 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className=" w-full text-gray-600 dark:text-gray-200">
-        Building{" "}
-        <span className=" py-1.5 px-3 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 font-semibold">
+      <div className=" w-full text-gray-600 text-xl max-w-2xl dark:text-gray-200">
+        Software Engineer & Full Stack Developer - building modern{" "}
+        <span className=" font-semibold">
+          SaaS products, scalable web apps Building
+        </span>
+        {/* <span className=" py-1.5 px-3 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 font-semibold">
           Web3
         </span>
         ,{" "}
@@ -73,12 +77,14 @@ const HeroSection = () => {
         <span className=" font-semibold text-gray-800 dark:text-gray-300">
           cool projects
         </span>
-        .
+        . */}
       </div>
 
       <div className=" max-w-xl text-gray-600 dark:text-gray-200 ">
-        Software Engineer building SaaS products and web apps. Find me on
-        twitter for tech updates and memes.
+        {/* Software Engineer building SaaS products and web apps. Find me on
+        twitter for tech updates and memes. */}
+        Creating fast, scalable apps with Next.js, TypeScript, and AWS - always
+        exploring better deployments.
       </div>
     </div>
   );
@@ -110,16 +116,12 @@ const ProjectSection = () => {
           return <ProjectCard project={project} />;
         })}
       </div>
-      <div
-        onClick={() =>
-          setShowProjectCount((prev) =>
-            prev === projectsData.length ? 4 : projectsData.length
-          )
-        }
+      <Link
+        href={"/freelancing"}
         className=" w-fit px-4 cursor-pointer mx-auto bg-white dark:bg-neutral-700 dark:text-white dark:border-gray-500 text-gray-600 hover:text-gray-900 rounded select-none hover:bg-gray-100 duration-200 py-2 border"
       >
-        {showMoreText}
-      </div>
+        View More
+      </Link>
     </div>
   );
 };
@@ -130,8 +132,9 @@ const ProjectCard = (props: any) => {
     router.push(url);
   }
   return (
-    <div
-      onClick={() => handleProjectClick(url)}
+    <Link
+      href={url}
+      target="_blank"
       className="sm:w-[calc(50%-0.5rem)] hover:shadow-lg dark:bg-emerald-900/20 dark:border-gray-600 cursor-pointer duration-200 w-full border flex flex-col sm:gap-8 gap-6 p-4 rounded-lg"
     >
       <div className="flex gap-4 justify-between">
@@ -176,11 +179,27 @@ const ProjectCard = (props: any) => {
           );
         })}
       </div>
-    </div>
+    </Link>
   );
 };
 
 const projectsData = [
+  {
+    logo: "https://ik.imagekit.io/hop/logo-nobg.png",
+    name: "Haus of Privae",
+    desc: "Developed a luxury e-commerce platform for Haus of Privae, enabling seamless shopping and custom garment experiences with modern, elegant UI.",
+    url: "https://www.hausofprivae.com/",
+    github: "https://github.com/ashish11011/hous-of-privae",
+    techs: [
+      "Nextjs",
+      "Tailwind",
+      "Typescript",
+      "Vercel",
+      "imagekit",
+      "postgresql",
+      "Next Auth",
+    ],
+  },
   {
     logo: "https://s3.ap-south-1.amazonaws.com/cozzy.corner/cozzy-corner-logo-dark.png",
     name: "Cozzy Corner",
@@ -197,21 +216,14 @@ const projectsData = [
     github: "https://github.com/ashish11011/anime",
     techs: ["Nextjs", "Tailwind", "Typescript", "MongoDB", "AWS", "Vercel"],
   },
+
   {
-    logo: "",
-    name: "Solana Wallet",
-    desc: "Build flux wallet where a user can add and create its Solana balance ",
-    url: "https://solana-wallet-sandy-tau.vercel.app/",
-    github: "https://github.com/ashish11011/solana-wallet",
-    techs: ["Nextjs", "Tailwind", "Typescript", "Alchemy", "Vercel"],
-  },
-  {
-    logo: "",
-    name: " Real-time chat X",
+    logo: "https://www.roamifyplanners.in/logo-black.png",
+    name: "Roamify Planners",
     desc: "Developed a real-time chat application, allowing users to join specific chat rooms with room IDs for participate live conversations.",
-    url: "",
-    github: "",
-    techs: ["Nextjs", "Tailwind", "Typescript", "Prisma", "NextAuth", "Vercel"],
+    url: "https://www.roamifyplanners.in/",
+    github: "https://github.com/ashish11011/roamfy",
+    techs: ["Nextjs", "Tailwind", "Typescript", "Prisma", "Vercel"],
   },
   {
     logo: "",
@@ -294,8 +306,8 @@ const ExperienceCard = (props: any) => {
             {position}
           </div>
         </div>
+        <div className=" font-semibold text-xs">{time}</div>
         <div className=" text-gray-500 dark:text-gray-400">{description}</div>
-        {/* <div className=" text-gray-500 text-xs">{time}</div> */}
       </div>
     </motion.div>
   );
@@ -304,32 +316,36 @@ const ExperienceCard = (props: any) => {
 const experienceData = [
   {
     logo: "",
-    company: "Av technosys",
+    company: "AV Technosys",
     isGolden: false,
     companyLink: "https://avtechnosys.com",
-    description: "Building Saas products and web apps",
+    description:
+      "Developing scalable SaaS products and modern web applications using Next.js and Node.js, with a focus on performance, clean architecture, and efficient deployment workflows.",
     position: "Full Stack Developer",
-    current: false,
-    time: "Jan 2025 - Present",
+    current: true,
+    time: "Jan 2025 – Present",
   },
   {
     logo: "",
     company: "Saaskart",
     isGolden: false,
     companyLink: "https://saaskart.in",
-    description: "Building a platform for buying and selling Saas products",
+    description:
+      "Built and optimized a SaaS marketplace platform for buying and selling digital products. Implemented onboarding dashboards, ticketing system, and AWS S3-based file management with SEO and analytics integration.",
     position: "Full Stack Developer",
     current: false,
-    time: "June 2024",
+    time: "Feb 2024 – Nov 2024",
   },
   {
     logo: "",
     company: "Carmatik",
     isGolden: false,
     companyLink: "",
-    description: "Created an engaging front end for a car lending website.",
+    description:
+      "Developed an engaging, high-performance front end for a car lending platform, ensuring responsive design and smooth user experience across devices.",
     position: "Frontend Developer",
-    time: "Apr 2024 - June 2024",
+    current: false,
+    time: "Dec 2024 – Feb 2024",
   },
   {
     logo: "",
@@ -337,9 +353,10 @@ const experienceData = [
     isGolden: false,
     companyLink: "",
     description:
-      "Developed a fully-fledged dashboard for analyzing energy usage data.",
+      "Built a full-featured analytics dashboard to visualize and manage energy usage data with secure authentication and modern UI components.",
     position: "Full Stack Developer",
-    time: "Jan 2024 - Feb 2024",
+    current: false,
+    time: "Nov 2024 – Dec 2024",
   },
   {
     logo: "",
@@ -347,9 +364,10 @@ const experienceData = [
     isGolden: true,
     companyLink: "",
     description:
-      "Developed Reverse proxy system and improved the response time by 20X.",
-    position: "SDE intern",
-    time: "Apr 2023 - June 2021",
+      "Implemented a YARP reverse proxy system that reduced latency by 50% and improved request throughput by 45%. Conducted performance testing to enhance system reliability.",
+    position: "Software Engineer Intern",
+    current: false,
+    time: "Apr 2023 – Jun 2023",
   },
 ];
 
