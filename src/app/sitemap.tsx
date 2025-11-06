@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const pages = ["/", "/projects", "/contact-me"];
+const pages = ["/", "/projects", "/contact-me", "/blogs"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;

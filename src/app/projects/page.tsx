@@ -1,14 +1,46 @@
-"use client";
 import { Footer } from "@/components/footer";
 import NavBar from "@/components/navBar";
+import { Metadata } from "next";
 import Link from "next/link";
-import React, { useState } from "react";
+
+export const metadata: Metadata = {
+  title: "Projects - Ashish Bishnoi",
+  description:
+    "Showcasing my projects built with Next.js, TypeScript, and AWS - focused on performance, scalability, and great user experiences.",
+  openGraph: {
+    title: "Ashish Bishnoi",
+    description:
+      "Showcasing my projects built with Next.js, TypeScript, and AWS - focused on performance, scalability, and great user experiences.",
+    url: "https://www.ashishbishnoi.com/projects",
+    siteName: "Ashish Bishnoi",
+    images: [
+      {
+        url: "https://ik.imagekit.io/hop/1718461831024.jpeg",
+        width: 512,
+        height: 512,
+        alt: "Ashish Bishnoi Logo",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ashish Bishnoi",
+    description:
+      "Showcasing my projects built with Next.js, TypeScript, and AWS - focused on performance, scalability, and great user experiences.",
+    images: ["https://ik.imagekit.io/hop/1718461831024.jpeg"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
+};
 
 const Page = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   return (
     <div className="px-4  bg-white dark:bg-darkColor flex flex-col gap-12">
-      <NavBar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+      <NavBar />
       <div className="h-20"></div>
       <FreelanceHead />
       <FreelanceProjectList />
@@ -63,12 +95,7 @@ function FreelancingCard(props: any) {
         <Link href={link} className=" underline ">
           {link}
         </Link>
-        <div className=" flex flex-col w-full gap-2">
-          {/* <div className=" text-gray-600">{description}</div> */}
-          {/* <div className=" text-gray-600">
-            Blogs, Twitter Threads, Essays and much more.
-          </div> */}
-        </div>
+        <div className=" flex flex-col w-full gap-2"></div>
         <div className=" flex flex-col gap-1 mt-2">
           <div className=" font-semibold text-gray-800 ">Tect Stack</div>
           <div className=" flex flex-col gap-2 gap-y-0">
@@ -155,7 +182,7 @@ const freelancingData = [
     ],
     techs: ["Nextjs", "Tailwind", "Vercel"],
     image: "/project/5.png",
-    link: "https://www.superaxlecompany.com/", // Provide the link if available
+    link: "https://www.superaxlecompany.com/",
   },
   {
     name: "The Adventure Bag Club",
@@ -168,7 +195,7 @@ const freelancingData = [
     ],
     techs: ["Nextjs", "Tailwind", "Typescript", "Vercel"],
     image: "/project/6.png",
-    link: "", // Provide the link if available
+    link: "",
   },
   {
     name: "Codeframe",
@@ -181,6 +208,6 @@ const freelancingData = [
     ],
     techs: ["Nextjs", "Tailwind", "Typescript", "Vercel"],
     image: "/project/7.png",
-    link: "", // Provide the link if available
+    link: "",
   },
 ];

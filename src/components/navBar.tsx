@@ -1,13 +1,11 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
 const NavBar = (params: any) => {
-  const { isDarkMode, setIsDarkMode } = params;
   const [scrollPosition, setScrollPosition] = useState(0);
   const [toMaxWidth, setToMaxWidth] = useState(true);
 
@@ -35,21 +33,6 @@ const NavBar = (params: any) => {
           !toMaxWidth ? "max-w-3xl" : "max-w-4xl"
         }  w-full duration-300 transition-all justify-between mx-auto pt-10 flex gap-4 py-4 px-4 sm:px-0 `}
       >
-        {/* <div
-          className=" px-4 py-2 bg-white dark:bg-darkColor rounded-3xl border dark:border-green-500 hover:border-green-500  cursor-pointer flex justify-center items-center hover:scale-105 duration-200 "
-          onClick={() => {
-            setIsDarkMode(!isDarkMode);
-          }}
-        >
-          {!isDarkMode ? (
-            <Sun
-              className=" stroke-black dark:fill-white dark:stroke-white"
-              size={16}
-            />
-          ) : (
-            <Moon className="dark:stroke-white" size={16} />
-          )}
-        </div> */}
         <div className=" ml-auto bg-white dark:bg-darkColor h-fit flex justify-center items-center overflow-hidden rounded-3xl border px-3">
           <Link
             href="/"
