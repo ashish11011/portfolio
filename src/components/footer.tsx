@@ -13,7 +13,7 @@ export const Footer = ({ className }: { className?: string }) => {
         className
       )}
     >
-      <Spotify />
+      {/* <Spotify /> */}
       <div className=" flex flex-col sm:flex-row gap-6 py-8 border-t dark:border-gray-600 px-2 sm:px-0">
         {footerData.map((data) => {
           return (
@@ -48,7 +48,7 @@ const footerData = [
     },
     {
       name: "Tech talks",
-      link: "/blogs",
+      link: "/blog",
     },
   ],
   [

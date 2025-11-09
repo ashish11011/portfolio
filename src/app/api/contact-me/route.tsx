@@ -1,58 +1,67 @@
-import { connect } from "@/dbConfig/dbConfig";
-import Contact from "@/models/contact";
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import AWS from "aws-sdk";
 export async function POST(request: NextRequest) {
-  connect();
   const { name, email, message } = await request.json();
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    port: 587,
-    secure: true,
-    auth: {
-      user: "bishnoi11011@gmail.com",
-      pass: "qfyq ludh njzw cust",
-    },
+  const ses = new AWS.SES({
+    accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY,
+    secretAccessKey: process.env.NEXT_S3_SECRET_KEY,
+    region: process.env.NEXT_PUBLIC_S3_REGION,
   });
 
-  const mailOptions = {
-    from: "bishnoi11011@gmail.com",
-    to: email,
-    subject: "Thank you for contacting me!",
-    text: `Hi ${name},\n\nThank you for reaching out through my portfolio! I appreciate your interest and will get back to you as soon as possible.\n\nHere's the message you sent:\n"${message}"\n\nBest regards,\nAshish Bishnoi`,
+  /* The following example sends a formatted email: */
+
+  // var params = {
+  //   Destination: {
+  //     BccAddresses: [],
+  //     // CcAddresses: ["recipient3@example.com"],
+  //     ToAddresses: ["bishnoi11011@gmail.com"],
+  //   },
+  //   Message: {
+  //     Body: {
+  //       Html: {
+  //         Charset: "UTF-8",
+  //         Data: 'This message body contains HTML formatting. It can, for example, contain links like this one: <a class="ulink" href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide" target="_blank">Amazon SES Developer Guide</a>.',
+  //       },
+  //       Text: {
+  //         Charset: "UTF-8",
+  //         Data: "This is the message body in text format.",
+  //       },
+  //     },
+  //     Subject: {
+  //       Charset: "UTF-8",
+  //       Data: "Test email",
+  //     },
+  //   },
+  //   ReplyToAddresses: [],
+  //   ReturnPath: "",
+  //   ReturnPathArn: "",
+  //   Source: "bishnoi11011@gmail.com",
+  //   SourceArn: "",
+  // };
+
+  var params = {
+    Destination: {
+      ToAddresses: [email],
+    },
+    Message: {
+      Body: {
+        Text: { Data: `Name: ${name} \nEmail: ${email} \nMessage: ${message}` },
+      },
+      Subject: { Data: "Test email" },
+    },
+    Source: "bishnoi11011@gmail.com",
+    ReplyToAddresses: [email],
   };
 
-  const ownerMailOptions = {
-    from: "bishnoi11011@gmail.com",
-    to: "bishnoi11011@gmail.com",
-    subject: "New Form Submission",
-    text: `New form submission received:\n\nName: ${name}\nEmail: ${email}\nMessage: ${message}`,
-  };
+  ses.sendEmail(params, function (err, data) {
+    if (err) console.log(err, err.stack); // an error occurred
+    else console.log(data); // successful response
+    /*
+   data = {
+    MessageId: "EXAMPLE78603177f-7a5433e7-8edb-42ae-af10-f0181f34d6ee-000000"
+   }
+   */
+  });
 
-  try {
-    const response = new Contact({
-      name,
-      email,
-      message,
-    });
-
-    await response.save();
-
-    const isVerified = await transporter.verify();
-
-    if (isVerified) {
-      await transporter.sendMail(mailOptions);
-      await transporter.sendMail(ownerMailOptions);
-    } else {
-      console.log("Not verified");
-    }
-
-    return NextResponse.json({ message: "Submitted and email sent." });
-  } catch (error) {
-    console.log(error);
-    return NextResponse.json({
-      message: "An error occurred while processing your request.",
-    });
-  }
+  return NextResponse.json({ message: "Submitted and email sent." });
 }
