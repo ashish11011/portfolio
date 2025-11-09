@@ -21,8 +21,7 @@ export const Footer = ({ className }: { className?: string }) => {
               {data.map((item) => {
                 return (
                   <Link
-                    href={item.link}
-                    target="_blank"
+                    href={item.link} 
                     className=" hover:text-gray-900 dark:hover:text-gray-200  cursor-pointer duration-300 text-gray-600 dark:text-gray-400 w-fit transition-all"
                   >
                     {item.name}
