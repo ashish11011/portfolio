@@ -1,62 +1,62 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 
-const BlogContent = ({ blogData }) => {
+const BlogContent = ({ blogData }: any) => {
   const renderContent = (lines: string[]) => {
     return lines?.map((line, index) => {
-      if (line.startsWith('# ')) {
+      if (line.startsWith("# ")) {
         return (
           <h1 key={index} className="text-4xl font-bold md:text-5xl">
-            {line.replace('# ', '')}
+            {line.replace("# ", "")}
           </h1>
         );
-      } else if (line.startsWith('## ')) {
+      } else if (line.startsWith("## ")) {
         return (
           <h2 key={index} className="text-3xl font-bold md:text-4xl">
-            {line.replace('## ', '')}
+            {line.replace("## ", "")}
           </h2>
         );
-      } else if (line.startsWith('### ')) {
+      } else if (line.startsWith("### ")) {
         return (
           <h3 key={index} className="text-2xl font-bold md:text-3xl">
-            {line.replace('### ', '')}
+            {line.replace("### ", "")}
           </h3>
         );
-      } else if (line.startsWith('#### ')) {
+      } else if (line.startsWith("#### ")) {
         return (
           <h4 key={index} className="text-xl font-bold md:text-2xl">
-            {line.replace('#### ', '')}
+            {line.replace("#### ", "")}
           </h4>
         );
-      } else if (line.startsWith('<u>')) {
+      } else if (line.startsWith("<u>")) {
         return (
           <div key={index} className="underline">
-            <p>{line.replace(/<u>/g, '').replace(/<\/u>/g, '')}</p>
+            <p>{line.replace(/<u>/g, "").replace(/<\/u>/g, "")}</p>
           </div>
         );
-      } else if (line.startsWith('- ')) {
+      } else if (line.startsWith("- ")) {
         return (
           <ul key={index} className="ml-5 list-disc">
-            <li>{line.replace('- ', '')}</li>
+            <li>{line.replace("- ", "")}</li>
           </ul>
         );
       } else if (/^\d+\./.test(line)) {
         return (
           <ol key={index} className="ml-5 list-decimal">
-            <li>{line.replace(/^\d+\.\s*/, '')}</li>
+            <li>{line.replace(/^\d+\.\s*/, "")}</li>
           </ol>
         );
-      } else if (line.startsWith('>')) {
+      } else if (line.startsWith(">")) {
         return (
           <blockquote
             key={index}
             className="border-l-4 border-gray-500 pl-4 italic"
           >
-            {line.replace('>', '')}
+            {line.replace(">", "")}
           </blockquote>
         );
-      } else if (line.startsWith('![') && line.includes('](')) {
-        const altText = line.match(/!\[(.*?)\]/)?.[1] || 'Image';
+      } else if (line.startsWith("![") && line.includes("](")) {
+        const altText = line.match(/!\[(.*?)\]/)?.[1] || "Image";
         const urlMatch: any = line.match(/\(([^)]+)\)/);
         const url: string = urlMatch ? urlMatch[1] : null;
         return (
@@ -67,7 +67,7 @@ const BlogContent = ({ blogData }) => {
             className="my-4 max-h-[32rem] max-w-full"
           />
         );
-      } else if (line.startsWith('[')) {
+      } else if (line.startsWith("[")) {
         const text = line.match(/\[(.*?)\]/)?.[1];
         const url = line.match(/\((.*?)\)/)?.[1];
         return (
@@ -89,19 +89,19 @@ const BlogContent = ({ blogData }) => {
       else if (/^\*\*(.*?)\*\*/.test(line)) {
         return (
           <p key={index} className="font-bold">
-            {line.replace(/\*\*/g, '')}
+            {line.replace(/\*\*/g, "")}
           </p>
         );
       } else if (/^_(.*?)_/.test(line)) {
         return (
           <p key={index} className="italic">
-            {line.replace(/_/g, '')}
+            {line.replace(/_/g, "")}
           </p>
         );
       } else if (/^~~(.*?)~~/.test(line)) {
         return (
           <p key={index} className="line-through">
-            {line.replace(/~~/g, '')}
+            {line.replace(/~~/g, "")}
           </p>
         );
       } else {
