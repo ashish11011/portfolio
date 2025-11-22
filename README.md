@@ -26,12 +26,19 @@ Cloudflare R2 / Vercel Deployments
 Install dependencies:
 
 npm install
-# or
+\
+or
+\
 yarn install
-# or
+\
+or
+\
 pnpm install
-# or
+\
+or
+\
 bun install
+
 
 
 Run the development server:
@@ -42,13 +49,13 @@ npm run dev
 Open http://localhost:3000
  to view the site.
 
-📂 Project Structure
-app/
- ├── components/       # UI components
- ├── sections/         # Homepage sections
- ├── projects/         # Project pages & data
- ├── api/              # Server actions / API routes
- ├── styles/           # Global styles
+📂 Project Structure\
+app/\
+ ├── components/       # UI components\
+ ├── sections/         # Homepage sections\
+ ├── projects/         # Project pages & data\
+ ├── api/              # Server actions / API routes\
+ ├── styles/           # Global styles\
  └── page.tsx          # Home page
 
 📦 Deployment
