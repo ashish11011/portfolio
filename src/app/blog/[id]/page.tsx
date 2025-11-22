@@ -10,7 +10,8 @@ import { Footer } from "@/components/footer";
 import ContactForm from "@/app/contact-me/contactForm";
 import { blogCategories } from "@/app/admin/blogs/selectblogcategory";
 
-export const revalidate = 604800;
+export const dynamic = "force-static";
+export const revalidate = 86400;
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -47,7 +48,8 @@ export async function generateMetadata(
 }
 
 const Page = async (context: any) => {
-  const slug = context.params.id;
+  const slug = (await context.params)?.id;
+  if (!slug) return null;
   const blogDataResponse = await getBlogBySlug(slug);
   const blogData = blogDataResponse[0];
 

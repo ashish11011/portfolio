@@ -29,7 +29,7 @@ const index = async () => {
         <TableBody>
           {blogData.map((data, idx) => {
             return (
-              <TableRow>
+              <TableRow key={idx}>
                 <TableHead>{idx}</TableHead>
                 <TableHead>{data?.title}</TableHead>
                 <TableHead>

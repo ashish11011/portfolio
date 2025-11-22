@@ -17,11 +17,12 @@ export const Footer = ({ className }: { className?: string }) => {
       <div className=" flex flex-col sm:flex-row gap-6 py-8 border-t dark:border-gray-600 px-2 sm:px-0">
         {footerData.map((data) => {
           return (
-            <div className=" w-full flex flex-col gap-6">
+            <div key={data[0].name} className=" w-full flex flex-col gap-6">
               {data.map((item) => {
                 return (
                   <Link
                     href={item.link}
+                    key={item.name}
                     className=" hover:text-gray-900 dark:hover:text-gray-200  cursor-pointer duration-300 text-gray-600 dark:text-gray-400 w-fit transition-all"
                   >
                     {item.name}

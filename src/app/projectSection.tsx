@@ -19,15 +19,15 @@ const ProjectSection = () => {
       id="projects"
       className=" max-w-3xl mt-4 w-full mx-auto flex flex-col gap-6"
     >
-      <p className=" sm:text-5xl text-3xl font-semibold text-gray-800 dark:text-gray-200 flex">
+      <h3 className=" sm:text-5xl text-3xl font-semibold text-gray-800">
         Projects{" "}
-      </p>
+      </h3>
       <div className=" w-full flex gap-4 flex-wrap">
         {projectsData.map((project: any, index: number) => {
           if (index >= showProjectCount) {
             return;
           }
-          return <ProjectCard project={project} />;
+          return <ProjectCard key={index} project={project} />;
         })}
       </div>
       <Link
@@ -66,7 +66,7 @@ const ProjectCard = (props: any) => {
           </div>
         </div>
         {github && (
-          <Link href={github} target="_blank">
+          <Link href={github || "/"} target="_blank">
             {" "}
             <Github
               color="#888"
@@ -151,7 +151,7 @@ const projectsData = [
     name: " Abhyudaya",
     desc: "Created a website for social welfare and awareness, where people can subscribe to the newsletter and participate in upcoming events.",
     url: "",
-    github: "",
+    github: null,
     techs: ["HTML", "Tailwind", "JavaScript", "MongoDB", "JWT", "Vercel"],
   },
 ];

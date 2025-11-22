@@ -64,7 +64,7 @@ const ShowBlogs = ({ blogData }: any) => {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {filteredBlogs?.map((blog: any, idx: any) => {
             if (idx == 0) return;
-            return <BlogCard blog={blog} idx={blog.id} />;
+            return <BlogCard blog={blog} idx={idx} />;
           })}
         </div>
       </div>

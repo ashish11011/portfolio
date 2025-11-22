@@ -3,36 +3,40 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import whatsappIcon from "./../../public/whatsappIcon.svg";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const SubscriptionSection = () => {
   const [email, setEmail] = useState("");
   const [formResponse, setFormResponse] = useState("");
-  const handleFormSubmition = (e: any) => {
+  const [loading, setLoading] = useState(false);
+  const handleFormSubmition = async (e: any) => {
     e.preventDefault();
     if (email) {
-      setEmail("");
-
-      const saveForm = async (email: string) => {
-        fetch("/api/subscribe", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            if (res?.message === "Submited") {
-              setFormResponse("Will Contect you shortly");
-            }
+      setLoading(true);
+      try {
+        const saveForm = async (email: string) => {
+          const response = await fetch("/api/subscribe", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
           });
-      };
-      saveForm(email);
+          const data = await response.json();
+          setFormResponse(data.message);
+        };
+        await saveForm(email);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   useEffect(() => {
-    if (formResponse === "Will Contect you shortly") {
+    if (formResponse) {
       setTimeout(() => {
         setFormResponse("");
       }, 4000);
@@ -40,6 +44,7 @@ const SubscriptionSection = () => {
 
     return () => {};
   }, [formResponse]);
+
   return (
     <div className=" border rounded-sm bg-blue-50 dark:bg-gray-800 dark:border-gray-600 mx-auto max-w-3xl w-full p-6 flex gap-4 flex-col">
       <div className="flex flex-col gap-0">
@@ -67,28 +72,28 @@ const SubscriptionSection = () => {
         ></Image>
       </Link>
 
-      <form
-        onSubmit={handleFormSubmition}
-        className=" border-t dark:border-gray-600 py-4 flex flex-col gap-2"
-      >
+      <form className=" border-t dark:border-gray-600 py-4 flex flex-col gap-2">
         <div className=" text-gray-500 dark:text-gray-200 ">
           Drop in your email ID and I will get back to you.
         </div>
         <div className="flex">
-          <input
+          <Input
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             name="email"
             type="email"
-            className=" focus:outline-none rounded-l-sm border dark:border-gray-500 w-full bg-white dark:bg-gray-600 flex overflow-hidden p-2 text-gray-700 dark:text-gray-200 placeholder-gray-400 "
+            size={120}
+            className=" bg-white h-10 rounded-none "
             placeholder="bishnoi11011@gmail.com"
-          ></input>
-          <button
-            type="submit"
-            className=" p-2 rounded-r-sm bg-green-500 w-40 right-2 flex justify-center items-center text-white font-bold hover:bg-green-600 duration-300 cursor-pointer"
+          ></Input>
+          <Button
+            size={"lg"}
+            disabled={loading}
+            onClick={handleFormSubmition}
+            className=" rounded-none bg-green-600 hover:bg-green-700"
           >
-            Submit
-          </button>
+            {loading ? "Sending..." : "Submit"}
+          </Button>
         </div>
         <div className=" text-green-600 dark:text-green-400">
           {formResponse}

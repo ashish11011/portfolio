@@ -5,6 +5,8 @@ import { Footer } from "@/components/footer";
 import ProjectSection from "./projectSection";
 import Experience from "./experienceSection";
 import SubscriptionSection from "./subscriptionSection";
+import ResumeSection from "./resumeSectino";
+import TestimonialSection from "./testimonialSection";
 
 export default function Home() {
   return (
@@ -14,7 +16,9 @@ export default function Home() {
         <HeroSection />
         <ProjectSection />
         <Experience />
+        <TestimonialSection />
         <SubscriptionSection />
+        <ResumeSection />
         <Footer />
       </div>
     </div>

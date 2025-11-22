@@ -2,11 +2,13 @@ import { Metadata } from "next";
 
 import ShowBlogs from "./showBlogs";
 import { BlogPagination } from "./paginationblog";
-import DebounceSearch from "./debounceSearch";
 import { getAllBlogsByPage } from "@/lib/blog.helper";
 import NavBar from "@/components/navBar";
 import { Footer } from "@/components/footer";
 import ContactForm from "../contact-me/contactForm";
+
+export const dynamic = "force-static";
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: {
@@ -42,8 +44,6 @@ const Blog = async ({ searchParams }: any) => {
     selectedCategory,
     search: searchText,
   });
-
-  console.log(blogData);
 
   return (
     <div className="pt-24 text-black">

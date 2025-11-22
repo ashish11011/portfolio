@@ -203,6 +203,7 @@ export async function updateBlogByID({
 
   revalidatePath("/admin");
   revalidatePath(`/blog/${slug}`);
+  revalidatePath(`/blog`);
 
   return response;
 }

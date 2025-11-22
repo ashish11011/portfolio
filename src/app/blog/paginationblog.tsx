@@ -44,9 +44,9 @@ export function BlogPagination({ page, totalPages, limit }: any) {
           />
         </PaginationItem>
 
-        {pageNumbers.map((pagenum) => {
+        {pageNumbers.map((pagenum, idx) => {
           return (
-            <PaginationItem onClick={() => handlePageChange(pagenum)}>
+            <PaginationItem key={idx} onClick={() => handlePageChange(pagenum)}>
               <div
                 className={
                   pagenum === page
