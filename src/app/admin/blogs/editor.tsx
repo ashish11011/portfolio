@@ -21,6 +21,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Youtube from "@tiptap/extension-youtube";
 import Table from "@tiptap/extension-table";
+import Code from "@tiptap/extension-code";
 import TableRow from "@tiptap/extension-table-row";
 import TableHeader from "@tiptap/extension-table-header";
 import TableCell from "@tiptap/extension-table-cell";
@@ -71,6 +72,7 @@ const TiptapEditor = ({ data }: any) => {
         controls: false,
         nocookie: true,
       }),
+      Code,
       Underline,
       Link.configure({
         openOnClick: false,
@@ -337,6 +339,14 @@ const TiptapEditor = ({ data }: any) => {
         </Toggle>
 
         <Toggle
+          pressed={editor.isActive("heading", { level: 2 })}
+          onPressedChange={() => editor.chain().focus().setCode().run()}
+        >
+          {/* <Heading className="h-4 w-4" /> */}
+          <span className="ml-1 text-xs">code</span>
+        </Toggle>
+
+        <Toggle
           pressed={editor.isActive("bulletList")}
           onPressedChange={() =>
             editor.chain().focus().toggleBulletList().run()
@@ -455,24 +465,24 @@ const TiptapEditor = ({ data }: any) => {
           Delete Table
         </Button>
       </div>
-
-      <div className="mb-4 rounded-md border-2 bg-white p-1">
-        <EditorContent className="[&>*]:focus:outline-none" editor={editor} />
+      <div className=" mt-12 grid grid-cols-2 gap-6">
+        <div className="mb-4 rounded-md border-2  max-h-screen overflow-y-auto bg-white p-1">
+          <EditorContent className="[&>*]:focus:outline-none" editor={editor} />
+        </div>
+        <div className="prose tiptap max-h-screen overflow-y-auto  ">
+          {/* <h3 className="mb-2 font-semibold">Preview (Saved HTML):</h3> */}
+          <div
+            className="tiptap [&>h1]:bg-red-100 [&>h2]:bg-yellow-100 [&>p]:bg-green-100 [&>*]:whitespace-pre-wrap [&>p>code]:bg-gray-100  [&>p>code]:border-l-4 [&>p>code]:py-0.5  [&>p>code]:pl-3  [&>p>code]:block 
+            
+            [&>p>pre]:bg-gray-100  [&>p>pre]:border-l-4 [&>p>pre]:py-0.5  [&>p>pre]:pl-3  [&>p>pre]:block
+            "
+            dangerouslySetInnerHTML={{ __html: editor.getHTML() }}
+          />
+        </div>
       </div>
-
       <Button disabled={loading} onClick={handleSave}>
         Save
       </Button>
-
-      {savedHtml && (
-        <div className="prose tiptap mt-4 pt-4">
-          <h3 className="mb-2 font-semibold">Preview (Saved HTML):</h3>
-          <div
-            className="space-y-2 break-all"
-            dangerouslySetInnerHTML={{ __html: savedHtml }}
-          />
-        </div>
-      )}
     </div>
   );
 };

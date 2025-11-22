@@ -127,7 +127,8 @@ const Page = async (context: any) => {
           </div>
 
           <div
-            className="tiptap space-y-2"
+            className="tiptap  [&>*]:whitespace-pre-wrap [&>p>code]:bg-gray-100  [&>p>code]:border-l-4 [&>p>code]:py-0.5  [&>p>code]:pl-3  [&>p>code]:block 
+            "
             dangerouslySetInnerHTML={{ __html: blogData.data }}
           />
         </div>
@@ -162,6 +163,7 @@ const Page = async (context: any) => {
           </div>
         </div>
       </div> */}
+      <div className="h-20"></div>
       <ContactForm />
       <Footer />
     </div>

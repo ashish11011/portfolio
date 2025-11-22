@@ -28,6 +28,12 @@ const BlogContent = ({ blogData }: any) => {
             {line.replace("#### ", "")}
           </h4>
         );
+      } else if (line.startsWith("<code>")) {
+        return (
+          <div key={index} className="underline">
+            {/* {line.replace(/<code>/g, "").replace(/<\/code>/g, "")} */}
+          </div>
+        );
       } else if (line.startsWith("<u>")) {
         return (
           <div key={index} className="underline">
