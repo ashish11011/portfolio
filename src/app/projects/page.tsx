@@ -52,7 +52,7 @@ const Page = () => {
 function FreelanceHead() {
   return (
     <div className=" max-w-4xl mx-auto w-full flex flex-col gap-6">
-      <p className=" text-5xl font-bold text-gray-800">Freelancing</p>
+      <h1 className=" text-5xl font-bold text-gray-800">Projects</h1>
       <div className=" flex flex-col gap-2">
         <p className=" text-gray-600">
           I love building products and web apps for humans. 👑
@@ -65,7 +65,7 @@ function FreelanceHead() {
 function FreelanceProjectList() {
   return (
     <div className=" px-4 md:px-0 max-w-4xl mx-auto w-full flex flex-col gap-6 ">
-      <p className=" text-3xl font-bold text-gray-800">Featured Projects</p>
+      <h3 className=" text-3xl font-bold text-gray-800">Featured Projects</h3>
       <div className=" flex flex-col gap-16">
         {freelancingData.map((data, index) => (
           <FreelancingCard key={index} data={data} />
@@ -91,16 +91,16 @@ function FreelancingCard(props: any) {
         <img className=" w-full h-auto object-cover" src={image} alt="" />
       </div>
       <div className=" flex flex-col gap-0.5 md:gap-3 ">
-        <p className=" text-3xl font-bold text-gray-800">{name}</p>
+        <h3 className=" text-3xl font-bold text-gray-800">{name}</h3>
         <Link href={link} className=" underline ">
           {link}
         </Link>
         <div className=" flex flex-col w-full gap-2"></div>
         <div className=" flex flex-col gap-1 mt-2">
-          <div className=" font-semibold text-gray-800 ">Tect Stack</div>
+          <p className=" font-semibold text-gray-800 ">Tect Stack</p>
           <div className=" flex flex-col gap-2 gap-y-0">
             {techs.map((tech: string) => (
-              <div className=" text-gray-600">{tech}</div>
+              <p className=" text-gray-600">{tech}</p>
             ))}
           </div>
         </div>

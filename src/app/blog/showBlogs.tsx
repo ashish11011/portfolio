@@ -106,7 +106,7 @@ function BlogCard({ blog, idx }: any) {
       </Link>
 
       <div className="flex gap-2 text-sm text-gray-600">
-        <p className="">{blog.userName}</p>
+        <p className="">Ashish Bishnoi</p>
         <p className=" ">{formatDateToDDMMYYYY(blog.date)}</p>
       </div>
       <Link

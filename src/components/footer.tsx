@@ -21,7 +21,7 @@ export const Footer = ({ className }: { className?: string }) => {
               {data.map((item) => {
                 return (
                   <Link
-                    href={item.link} 
+                    href={item.link}
                     className=" hover:text-gray-900 dark:hover:text-gray-200  cursor-pointer duration-300 text-gray-600 dark:text-gray-400 w-fit transition-all"
                   >
                     {item.name}
@@ -64,7 +64,7 @@ const footerData = [
     // { name: "Freelancing", link: "/freelancing" },
     {
       name: "Design Inspiration",
-      link: "https://majestic-potential-d88.notion.site/13ac368d3f0b8009a24ad5e8cd37d8b9?pvs=4",
+      link: "https://www.sitesforux.com/",
     },
   ],
 ];

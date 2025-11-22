@@ -11,9 +11,9 @@ const Experience = () => {
       id="experience"
       className="max-w-3xl mx-auto w-full flex flex-col gap-6"
     >
-      <div className="sm:text-5xl text-3xl font-semibold text-gray-800 dark:text-gray-200">
+      <p className="sm:text-5xl text-3xl font-semibold text-gray-800 dark:text-gray-200">
         Experience
-      </div>
+      </p>
       <div className="flex flex-col gap-10">
         {experienceData.map((data, index) => (
           <motion.div
@@ -66,12 +66,12 @@ const ExperienceCard = (props: any) => {
               <span className=" text-sm text-green-400  ">current</span>
             )}
           </div>
-          <div className=" text-sm text-gray-500 dark:text-gray-400">
+          <p className=" text-sm text-gray-500 dark:text-gray-400">
             {position}
-          </div>
+          </p>
         </div>
-        <div className=" font-semibold text-xs">{time}</div>
-        <div className=" text-gray-500 dark:text-gray-400">{description}</div>
+        <h3 className=" font-semibold text-xs">{time}</h3>
+        <p className=" text-gray-500 dark:text-gray-400">{description}</p>
       </div>
     </motion.div>
   );
@@ -84,7 +84,7 @@ const experienceData = [
     isGolden: false,
     companyLink: "https://avtechnosys.com",
     description:
-      "Developing scalable SaaS products and modern web applications using Next.js and Node.js, with a focus on performance, clean architecture, and efficient deployment workflows.",
+      "Developing scalable, web applications using Next.js and Node.js, with a focus on performance, clean architecture, and efficient deployment workflows.",
     position: "Full Stack Developer",
     current: true,
     time: "Jan 2025 – Present",

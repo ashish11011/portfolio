@@ -19,9 +19,9 @@ const ProjectSection = () => {
       id="projects"
       className=" max-w-3xl mt-4 w-full mx-auto flex flex-col gap-6"
     >
-      <div className=" sm:text-5xl text-3xl font-semibold text-gray-800 dark:text-gray-200 flex">
+      <p className=" sm:text-5xl text-3xl font-semibold text-gray-800 dark:text-gray-200 flex">
         Projects{" "}
-      </div>
+      </p>
       <div className=" w-full flex gap-4 flex-wrap">
         {projectsData.map((project: any, index: number) => {
           if (index >= showProjectCount) {
@@ -76,19 +76,19 @@ const ProjectCard = (props: any) => {
         )}
       </div>
 
-      <div className="text-gray-500 dark:text-gray-400 text-sm tracking-wider">
+      <p className="text-gray-500 dark:text-gray-400 text-sm tracking-wider">
         {desc}
-      </div>
+      </p>
 
       <div className="flex gap-2 flex-wrap">
         {techs.map((tech: string, index: number) => {
           return (
-            <div
+            <p
               key={index}
               className="py-1.5 px-3 bg-gray-100 dark:bg-gray-700 text-xs rounded text-gray-800 dark:text-gray-200 font-semibold"
             >
               {tech}
-            </div>
+            </p>
           );
         })}
       </div>

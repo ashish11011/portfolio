@@ -25,10 +25,10 @@ const HeroSection = () => {
   return (
     <div className=" flex gap-6 flex-col max-w-3xl w-full mx-auto mt-40">
       <div className="flex justify-between flex-col-reverse sm:flex-row  gap-6 w-full">
-        <p className="  pt-2 sm:text-4xl text-4xl text-gray-500 font-semibold gap-2 dark:text-gray-200 ">
+        <h1 className="  pt-2 sm:text-4xl text-4xl text-gray-500 font-semibold gap-2 dark:text-gray-200 ">
           👋 Hi, I’m <br className=" block sm:hidden" />
           <span className="text-black">Ashish Bishnoi</span>
-        </p>
+        </h1>
         <div className="">
           <div className="p-2 relative w-fit translate-x-2/3 sm:translate-x-0 ">
             <Image
@@ -49,17 +49,17 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className=" w-full text-gray-600 text-xl max-w-2xl dark:text-gray-200">
+      <h2 className=" w-full text-gray-600 text-xl max-w-2xl dark:text-gray-200">
         Software Engineer & Full Stack Developer - building modern{" "}
         <span className=" font-semibold">
           SAAS products, Scalable Web Apps Building
         </span>
-      </div>
+      </h2>
 
-      <div className=" max-w-xl text-gray-600 dark:text-gray-200 ">
+      <p className=" max-w-xl text-gray-600 dark:text-gray-200 ">
         Creating fast, scalable apps with Next.js, TypeScript, and AWS - always
         exploring better deployments.
-      </div>
+      </p>
     </div>
   );
 };

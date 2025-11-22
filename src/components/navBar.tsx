@@ -31,7 +31,7 @@ const NavBar = (params: any) => {
       <div
         className={` ${
           !toMaxWidth ? "max-w-3xl" : "max-w-4xl"
-        }  w-full duration-300 transition-all justify-between mx-auto pt-10 flex gap-4 py-4 px-4 sm:px-0 `}
+        }  w-full duration-300 transition-all justify-between mx-auto pt-6 md:pt-10 flex gap-4 py-4 px-4 sm:px-0 `}
       >
         <div className=" ml-auto bg-white dark:bg-darkColor h-fit flex justify-center items-center overflow-hidden rounded-3xl border px-3">
           <Link
