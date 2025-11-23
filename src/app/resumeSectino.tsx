@@ -24,7 +24,7 @@ export default function ResumeSection() {
         >
           <a
             target="_blank"
-            href="https://drive.google.com/file/d/1yvW5Ji3Eo1cWJJ5ciyvOUJVeepDCXTV_/view?usp=sharing"
+            href="https://drive.google.com/file/d/1ajbO3CJTI9SlWbJ1cXXFyj9SKWCKjneC/view?usp=sharing"
             download
           >
             <Download className="mr-2 h-5 w-5" />
