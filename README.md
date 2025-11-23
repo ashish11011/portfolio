@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🌐 Ashish Bishnoi - Personal Portfolio
 
-## Getting Started
+This is my personal portfolio built with Next.js, Tailwind CSS, and TypeScript.
+It highlights my skills, projects, testimonials, freelancing work, and provides an easy way to download my resume or contact me.
 
-First, run the development server:
+🚀 Tech Stack
 
-```bash
+Next.js 14
+React
+Tailwind CSS
+TypeScript
+Shadcn/UI
+Framer Motion
+Cloudflare R2 / Vercel Deployments
+
+✨ Features
+🧑‍💻 About Me Section
+📁 Featured Projects
+🛠️ Freelancing Work Showcase
+⭐ Testimonials
+📄 Resume
+
+🎨 Clean, modern UI with smooth animations
+
+🧩 Getting Started
+Install dependencies:
+
+npm install
+\
+or
+\
+yarn install
+\
+or
+\
+pnpm install
+\
+or
+\
+bun install
+
+
+
+Run the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open http://localhost:3000
+ to view the site.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+📂 Project Structure\
+app/\
+ ├── components/       # UI components\
+ ├── sections/         # Homepage sections\
+ ├── projects/         # Project pages & data\
+ ├── api/              # Server actions / API routes\
+ ├── styles/           # Global styles\
+ └── page.tsx          # Home page
 
-## Learn More
+📦 Deployment
 
-To learn more about Next.js, take a look at the following resources:
+This portfolio is deployed using Vercel.
+To deploy your own version:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Push the project to GitHub
+Connect the repository to Vercel
+Configure environment variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+🤝 Contributing
 
-## Deploy on Vercel
+This is a personal project, but suggestions and feedback are welcome.
+Feel free to open an issue or submit improvements.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+📬 Contact
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If you'd like to collaborate or get in touch:
+
+Portfolio: https://ashishbishnoi.com
+Email: bishnoi11011@gmail.com
