@@ -34,8 +34,43 @@ test('metadata resolves canonical and sharing URLs against the configured origin
 test('metadata has a valid production origin and sharing image without optional configuration', () => {
   const seo = load('src/lib/seo.ts');
   const meta = seo.pageMetadata({ title: 'Blog', description: 'Articles', path: '/blog' });
-  assert.equal(meta.alternates.canonical, 'https://www.ashishbishnoi.com/blog');
-  assert.equal(meta.twitter.images[0], 'https://www.ashishbishnoi.com/ashish-img.jpg');
+  assert.equal(meta.alternates.canonical, 'https://www.ashishbuilds.in/blog');
+  assert.equal(meta.twitter.images[0], 'https://www.ashishbuilds.in/ashish-img.jpg');
+});
+
+test('sitemap includes public detail pages and every blog archive page with unique absolute URLs', async () => {
+  const seo = load('src/lib/seo.ts');
+  const publicPosts = Array.from({ length: 25 }, (_, index) => ({ slug: `post-${index}`, isVisible: true }));
+  const blogs = repository([...publicPosts, { slug: 'draft', isVisible: false }, { slug: null, isVisible: true }]);
+  const { default: sitemap } = load('src/app/sitemap.tsx', {
+    '@/lib/seo': seo,
+    '@/lib/projects.repository': { getPublicProjects: async () => [{ slug: 'cozzy-corner' }, { slug: 'roamify-planners' }] },
+    '@/lib/blogs.repository': blogs,
+  });
+  const urls = (await sitemap()).map((entry) => entry.url);
+  const expectedPaths = ['/', '/projects', '/contact-me', '/blog', '/projects/cozzy-corner', '/projects/roamify-planners',
+    ...publicPosts.map((post) => `/blog/${post.slug}`), '/blog/page/2', '/blog/page/3'];
+  assert.deepEqual(Array.from(urls).sort(), expectedPaths.map(seo.absoluteUrl).sort());
+  assert.equal(new Set(urls).size, urls.length);
+  assert(!urls.some((url) => /admin|api\/|draft|\[object Object\]|\/page\/1$/.test(url)));
+});
+
+test('sitemap fails a storage read instead of publishing an incomplete catalog', async () => {
+  const { default: sitemap } = load('src/app/sitemap.tsx', {
+    '@/lib/seo': load('src/lib/seo.ts'),
+    '@/lib/projects.repository': { getPublicProjects: async () => { throw new Error('Unavailable'); } },
+    '@/lib/blogs.repository': { BLOG_PAGE_SIZE: 10, getPublicBlogs: async () => [] },
+  });
+  await assert.rejects(sitemap(), /Unavailable/);
+});
+
+test('robots points to the canonical sitemap and permits public content and images', () => {
+  const { default: robots } = load('src/app/robots.tsx', { '@/lib/seo': load('src/lib/seo.ts') });
+  const result = robots();
+  assert.equal(result.sitemap, 'https://www.ashishbuilds.in/sitemap.xml');
+  assert.equal(result.rules[0].userAgent, '*');
+  assert.equal(result.rules[0].allow, '/');
+  assert.deepEqual(Array.from(result.rules[0].disallow), ['/admin', '/api/']);
 });
 
 test('stored JSON dates and plain dates produce consistent article timestamps', () => {

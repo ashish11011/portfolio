@@ -15,7 +15,7 @@ export default function Page() {
   return (
     <div className="page-stack">
       <NavBar />
-      <main className="site-shell"><ContactForm /></main>
+      <main className="site-shell"><ContactForm headingLevel={1} /></main>
       <Footer />
     </div>
   );

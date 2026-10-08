@@ -7,7 +7,8 @@ import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
-function ContactForm() {
+function ContactForm({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
+  const Heading = headingLevel === 1 ? "h1" : "h2";
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -59,7 +60,7 @@ function ContactForm() {
     <Reveal as="section" aria-labelledby="contact-heading" className="w-full">
       <ToastContainer />
       <p className="eyebrow mb-3">Get in touch</p>
-      <h2 id="contact-heading" className="mb-3">Let’s talk.</h2>
+      <Heading id="contact-heading" className="mb-3">Let’s talk.</Heading>
       <p className="mb-8 max-w-xl text-muted-foreground">Have an idea, a project, or just want to say hello? Leave a message and let’s connect.</p>
       <form onSubmit={handleFormSubmittion} className="flex flex-col gap-6">
         <div className="grid gap-6 sm:grid-cols-2">

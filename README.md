@@ -23,6 +23,8 @@ Cloudflare R2 / Vercel Deployments
 🎨 Clean, modern UI with smooth animations
 
 🧩 Getting Started
+Use Node.js 24. If you use nvm, run `nvm install` and `nvm use` to select the version in `.nvmrc`.
+
 Install dependencies:
 
 npm install
@@ -67,6 +69,8 @@ Push the project to GitHub
 Connect the repository to Vercel
 Configure environment variables
 
+Use Node.js **24.x** in Vercel's **Project Settings → Build and Deployment → Node.js Version**. The `engines.node` value in `package.json` also selects Node.js 24 for new deployments. Deploy the updated commit for this setting to take effect.
+
 🤝 Contributing
 
 This is a personal project, but suggestions and feedback are welcome.
@@ -97,7 +101,7 @@ Email: bishnoi11011@gmail.com
 - Home, projects, blog listings, and every published project/blog detail page are statically generated. `generateStaticParams` includes all visible detail pages at build time. Blog pagination uses crawlable `/blog/page/2` URLs, with `/blog` as page 1.
 - Admin saves invalidate the affected static pages and sitemap. New slugs are generated and cached on their first visit, so publishing new content does not require a redeploy. A daily regeneration interval also picks up changes made directly in the database.
 - The build needs access to the configured database to include projects and published blogs. Unavailable project storage or a failed configured blog database read fails static generation instead of publishing an empty archive. The admin project page reports unavailable storage; it does not restore projects from a local file.
-- Public pages include unique titles, descriptions, canonical URLs, Open Graph/Twitter cards, and structured data for the portfolio, project collections, individual projects, and articles. `NEXT_PUBLIC_BASE_URL` sets the canonical site origin and defaults to `https://www.ashishbishnoi.com`.
+- Public pages include unique titles, descriptions, canonical URLs, Open Graph/Twitter cards, and structured data for the portfolio, project collections, individual projects, and articles. `NEXT_PUBLIC_BASE_URL` sets the canonical site origin and defaults to `https://www.ashishbuilds.in`. Set the same value in Vercel so sitemap URLs and canonical tags use the final domain after redirects.
 - Hidden content is excluded from public pages and the sitemap. Admin pages are marked `noindex`, and robots permits crawling public images.
 - Run `npm run test:seo` to check metadata, safe structured data, published-blog selection, and invalidation after blog saves and visibility changes, without connecting to the database.
 

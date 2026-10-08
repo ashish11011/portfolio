@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const siteUrl = (process.env.NEXT_PUBLIC_BASE_URL || "https://www.ashishbishnoi.com").replace(/\/$/, "");
+export const siteUrl = (process.env.NEXT_PUBLIC_BASE_URL || "https://www.ashishbuilds.in").replace(/\/$/, "");
 export const siteName = "Ashish Bishnoi";
 export const defaultDescription = "Full-Stack Engineer and ex-Microsoft intern building scalable web products, backend systems, APIs, and cloud services with Next.js, TypeScript, and AWS.";
 export const absoluteUrl = (path: string) => new URL(path, `${siteUrl}/`).toString();
