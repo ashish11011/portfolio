@@ -1,8 +1,5 @@
-"use client";
-
-import { Card, CardContent } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
+import { Reveal } from "@/components/reveal";
+import { ArrowUpRight } from "lucide-react";
 
 const testimonials = [
   {
@@ -50,57 +47,24 @@ const testimonials = [
 
 export default function TestimonialSection() {
   return (
-    <section className="w-full py-24 bg-gray-50/35">
-      <div className="max-w-3xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className=" mb-16"
-        >
-          <h2 className=" sm:text-5xl mb-1 text-3xl font-semibold text-gray-800">
-            What People Say
-          </h2>
-
-          <p className="text-gray-600 text-lg">
-            A few kind words from the people I’ve worked with.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {testimonials.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <Card className="rounded-2xl shadow-sm hover:shadow-md transition bg-white border">
-                <CardContent className="p-6">
-                  <Quote className="h-6 w-6 text-gray-400 mb-4" />
-
-                  <p className="text-gray-700 mb-6">{item.message}</p>
-
-                  <div>
-                    <p className="font-semibold text-gray-900">{item.name}</p>
-                    <p className="text-sm text-gray-600">
-                      {item.position} @{" "}
-                      <a
-                        href={item.website}
-                        className="text-blue-600 hover:underline"
-                        target="_blank"
-                      >
-                        {item.company}
-                      </a>
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+    <section aria-labelledby="testimonials-heading">
+      <Reveal>
+      <h2 id="testimonials-heading" className="section-heading mb-3">Kind words</h2>
+      <p className="mb-6 text-sm text-muted-foreground">From the people I’ve worked with.</p>
+      </Reveal>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {testimonials.map((item, index) => (
+          <Reveal as="figure" key={item.name} delay={(index % 2) * 0.08} className="surface motion-card flex flex-col gap-6">
+            <blockquote className="text-sm text-muted-foreground">“{item.message}”</blockquote>
+            <figcaption className="mt-auto">
+              <p className="text-sm font-medium">{item.name}</p>
+              <p className="mt-1.5 text-xs text-muted-foreground">{item.position}</p>
+              <a href={item.website} className="mt-2 inline-flex items-center gap-1.5 text-xs hover:underline underline-offset-4" target="_blank" rel="noreferrer">
+                {item.company}<ArrowUpRight size={12} />
+              </a>
+            </figcaption>
+          </Reveal>
+        ))}
       </div>
     </section>
   );

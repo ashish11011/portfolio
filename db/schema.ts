@@ -2,11 +2,32 @@ import {
   boolean,
   index,
   integer,
+  jsonb,
   pgTable,
   timestamp,
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
+import type { ProjectDocument } from "../src/types/project";
+
+export const projectTable = pgTable("project", {
+  id: varchar("id", { length: 150 }).primaryKey(),
+  slug: varchar("slug", { length: 150 }).notNull().unique(),
+  name: varchar("name", { length: 200 }).notNull(),
+  description: varchar("description").notNull(),
+  summary: varchar("summary").notNull().default(""),
+  features: varchar("features").array().notNull().default([]),
+  technologies: varchar("technologies").array().notNull().default([]),
+  images: varchar("images").array().notNull().default([]),
+  website: varchar("website").notNull().default(""),
+  logo: varchar("logo").notNull().default(""),
+  content: jsonb("content").$type<ProjectDocument>().notNull().default({ type: "doc", content: [] }),
+  featuredOrder: integer("featured_order"),
+  sortOrder: integer("sort_order").notNull().default(0),
+  isVisible: boolean("is_visible").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
 
 export const blogTable = pgTable(
   "blog",

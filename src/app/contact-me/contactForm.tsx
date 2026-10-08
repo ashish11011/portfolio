@@ -1,4 +1,8 @@
 "use client";
+
+import { Reveal } from "@/components/reveal";
+import { Button } from "@/components/ui/button";
+import "react-toastify/dist/ReactToastify.css";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
@@ -52,51 +56,32 @@ function ContactForm() {
     setLoading(false);
   }
   return (
-    <div className="max-w-3xl mx-auto w-full">
+    <Reveal as="section" aria-labelledby="contact-heading" className="w-full">
       <ToastContainer />
-      <h2 className="text-3xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-        Contact Me
-      </h2>
-      <form className="flex flex-col gap-6">
-        <input
-          onChange={(e) => handleInputChange(e)}
-          type="text"
-          name="name"
-          value={formData.name}
-          placeholder="Name"
-          className="py-2 px-4 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none"
-        />
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={(e) => handleInputChange(e)}
-          placeholder="Email"
-          className="py-2 px-4 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none"
-        />
-        <textarea
-          placeholder="Message"
-          name="message"
-          value={formData.message}
-          onChange={(e) => handleInputChange(e)}
-          rows={5}
-          className="py-2 px-4 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none"
-        ></textarea>
-        <button
-          type="submit"
-          onClick={(e) => handleFormSubmittion(e)}
-          className={` ${
-            loading && "pointer-events-none"
-          } py-2 px-4 rounded bg-blue-500 dark:bg-blue-600 text-white font-semibold hover:bg-blue-600 dark:hover:bg-blue-700 transition duration-200`}
-        >
-          {loading ? (
-            <LoaderCircle className=" mx-auto animate-spin" />
-          ) : (
-            "Send Message"
-          )}
-        </button>
+      <p className="eyebrow mb-3">Get in touch</p>
+      <h2 id="contact-heading" className="mb-3">Let’s talk.</h2>
+      <p className="mb-8 max-w-xl text-muted-foreground">Have an idea, a project, or just want to say hello? Leave a message and let’s connect.</p>
+      <form onSubmit={handleFormSubmittion} className="flex flex-col gap-6">
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="contact-name" className="text-sm font-medium">Name</label>
+            <input id="contact-name" onChange={handleInputChange} type="text" name="name" value={formData.name} placeholder="Your name" autoComplete="name" required className="field" />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="contact-email" className="text-sm font-medium">Email</label>
+            <input id="contact-email" type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="you@example.com" autoComplete="email" required className="field" />
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="contact-message" className="text-sm font-medium">Message</label>
+          <textarea id="contact-message" placeholder="Tell me a little about your project…" name="message" value={formData.message} onChange={handleInputChange} rows={5} required className="field resize-y" />
+        </div>
+        <Button type="submit" disabled={loading} size="lg" className="w-fit">
+          {loading && <LoaderCircle className="animate-spin" aria-hidden="true" />}
+          {loading ? "Sending…" : "Send message"}
+        </Button>
       </form>
-    </div>
+    </Reveal>
   );
 }
 

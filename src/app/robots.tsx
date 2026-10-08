@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { absoluteUrl } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -6,30 +7,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: [
-          // Admin and API
-          "/admin/",
-          "/admin/*",
-          "/blogs/",
-          "/api/",
-          "/api/*",
-
-          // Disallow static files
-          "/*.jpg$",
-          "/*.jpeg$",
-          "/*.png$",
-          "/*.gif$",
-          "/*.webp$",
-          "/*.svg$",
-          "/*.mp4$",
-          "/*.webm$",
-          "/*.mov$",
-          "/*.pdf$",
-          "/*.doc$",
-          "/*.docx$",
-        ],
+        disallow: ["/admin", "/api/"],
       },
     ],
-    sitemap: `${process.env.NEXT_PUBLIC_BASE_URL}/sitemap.xml`,
+    sitemap: absoluteUrl("/sitemap.xml"),
   };
 }

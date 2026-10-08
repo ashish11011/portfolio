@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { hasAdminCookie } from "@/lib/admin-token";
 
 export function proxy(request: NextRequest) {
-  const token = request.cookies.get("token");
-
-  if (token && token.value === "Ashish.ab1") {
+  if (hasAdminCookie((name) => request.cookies.get(name)?.value)) {
     return NextResponse.next();
   }
 

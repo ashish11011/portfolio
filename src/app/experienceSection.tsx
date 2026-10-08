@@ -1,81 +1,28 @@
-"use client";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import blueTick from "./../../public/tickBlueIcon.svg";
-import goldTick from "./../../public/tickGoldIcon.svg";
+import { Reveal } from "@/components/reveal";
 import Link from "next/link";
 
-const Experience = () => {
+export default function Experience() {
   return (
-    <div
-      id="experience"
-      className="max-w-3xl mx-auto w-full flex flex-col gap-6"
-    >
-      <p className="sm:text-5xl text-3xl font-semibold text-gray-800 dark:text-gray-200">
-        Experience
-      </p>
-      <div className="flex flex-col gap-10">
-        {experienceData.map((data, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0.7, scaleX: 0.9 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className=""
-          >
-            <ExperienceCard data={data} />
-          </motion.div>
+    <section id="experience" aria-labelledby="experience-heading">
+      <Reveal><h2 id="experience-heading" className="section-heading">Experience</h2></Reveal>
+      <div className="flex flex-col">
+        {experienceData.map((item) => (
+          <Reveal as="article" key={item.company} className="grid gap-4 border-b py-6 first:pt-0 last:border-0 last:pb-0 sm:grid-cols-[160px_1fr] sm:gap-8">
+            <p className="eyebrow pt-1">{item.time}</p>
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-wrap items-center gap-3">
+                <h3>{item.companyLink ? <Link href={item.companyLink} target="_blank" rel="noreferrer" className="hover:underline underline-offset-4">{item.company}</Link> : item.company}</h3>
+                {item.current && <span className="rounded-sm border px-2 py-1.5 font-mono text-xs text-muted-foreground">Current</span>}
+              </div>
+              <p className="text-sm">{item.position}</p>
+              <p className="text-sm text-muted-foreground">{item.description}</p>
+            </div>
+          </Reveal>
         ))}
       </div>
-    </div>
+    </section>
   );
-};
-
-export default Experience;
-
-const ExperienceCard = (props: any) => {
-  const {
-    logo,
-    company,
-    isGolden,
-    companyLink,
-    description,
-    position,
-    current,
-    time,
-  } = props.data;
-  return (
-    <motion.div className="flex gap-3 w-full">
-      <div className=" pt-1.5">
-        <Image
-          className=""
-          src={isGolden ? goldTick : blueTick}
-          width={20}
-          height={20}
-          alt="Logo"
-        ></Image>
-      </div>
-      <div className=" flex flex-col gap-4 w-full">
-        <div className=" flex gap-0 flex-col sm:flex-row sm:justify-between sm:items-center">
-          <div className=" text-lg font-semibold dark:text-gray-200 flex gap-2 items-center">
-            <Link target="_blank" href={companyLink}>
-              {company}
-            </Link>
-            {current && (
-              <span className=" text-sm text-green-400  ">current</span>
-            )}
-          </div>
-          <p className=" text-sm text-gray-500 dark:text-gray-400">
-            {position}
-          </p>
-        </div>
-        <h3 className=" font-semibold text-xs">{time}</h3>
-        <p className=" text-gray-500 dark:text-gray-400">{description}</p>
-      </div>
-    </motion.div>
-  );
-};
+}
 
 const experienceData = [
   {

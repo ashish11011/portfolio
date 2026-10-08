@@ -1,106 +1,57 @@
 "use client";
-import Image from "next/image";
+
+import { Reveal } from "@/components/reveal";
+
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import whatsappIcon from "./../../public/whatsappIcon.svg";
+import { ArrowUpRight } from "lucide-react";
+import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const SubscriptionSection = () => {
+export default function SubscriptionSection() {
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [formResponse, setFormResponse] = useState("");
   const [loading, setLoading] = useState(false);
-  const handleFormSubmition = async (e: any) => {
-    e.preventDefault();
-    if (email) {
-      setLoading(true);
-      try {
-        const saveForm = async (email: string) => {
-          const response = await fetch("/api/subscribe", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email }),
-          });
-          const data = await response.json();
-          setFormResponse(data.message);
-        };
-        await saveForm(email);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
 
-  useEffect(() => {
-    if (formResponse) {
-      setTimeout(() => {
-        setFormResponse("");
-      }, 4000);
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!email.trim() || !message.trim() || loading) return;
+    setLoading(true);
+    setFormResponse("");
+    try {
+      const response = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), message: message.trim() }),
+      });
+      const data = await response.json();
+      setFormResponse(data.message);
+      if (response.ok) { setEmail(""); setMessage(""); }
+    } catch {
+      setFormResponse("Couldn’t send your message. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    return () => {};
-  }, [formResponse]);
+  }
 
   return (
-    <div className=" border rounded-sm bg-blue-50 dark:bg-gray-800 dark:border-gray-600 mx-auto max-w-3xl w-full p-6 flex gap-4 flex-col">
-      <div className="flex flex-col gap-0">
-        <div className=" text-2xl sm:font-bold font-semibold dark:text-gray-200">
-          Want to hire me as a freelancer? Let's discuss.
-        </div>
-        <div className=" text-gray-500 dark:text-gray-400">
-          Drop your message and let's discuss about your project.
-        </div>
+    <Reveal as="section" className="surface flex flex-col gap-6" aria-labelledby="connect-heading">
+      <div className="flex flex-col gap-3">
+        <p className="eyebrow">Let’s build something</p>
+        <h2 id="connect-heading">Have a project in mind?</h2>
+        <p className="text-sm text-muted-foreground">I’d love to hear what you’re working on. Get in touch to discuss your next project.</p>
+        <Link href="https://wa.me/6239565852?text=Hi%20Ashish%20Bishnoi" className="text-link mt-1.5 w-fit">Message me on WhatsApp <ArrowUpRight size={16} /></Link>
       </div>
-
-      <Link
-        href={"https://wa.me/6239565852?text=Hi%20Ashish%20Bishnoi"}
-        className=" flex items-center rounded bg-green-500 hover:bg-gradient-to-br hover:from-green-500 hover:to-green-600 duration-300 gap-2 flex-row-reverse sm:justify-end cursor-pointer sm:w-fit w-full p-1.5 justify-center group"
-      >
-        <div className=" text-white dark:text-gray-200 font-semibold">
-          Text on whatsapp
-        </div>
-        <Image
-          className=" cursor-pointer rounded flex"
-          src={whatsappIcon}
-          alt="whatsapp icon"
-          width={28}
-          height={28}
-        ></Image>
-      </Link>
-
-      <form className=" border-t dark:border-gray-600 py-4 flex flex-col gap-2">
-        <div className=" text-gray-500 dark:text-gray-200 ">
-          Drop in your email ID and I will get back to you.
-        </div>
-        <div className="flex">
-          <Input
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            name="email"
-            type="email"
-            size={120}
-            className=" bg-white h-10 rounded-none "
-            placeholder="bishnoi11011@gmail.com"
-          ></Input>
-          <Button
-            size={"lg"}
-            disabled={loading}
-            onClick={handleFormSubmition}
-            className=" rounded-none bg-green-600 hover:bg-green-700"
-          >
-            {loading ? "Sending..." : "Submit"}
-          </Button>
-        </div>
-        <div className=" text-green-600 dark:text-green-400">
-          {formResponse}
-        </div>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3 border-t pt-6">
+        <p className="text-sm text-muted-foreground">Or send me a message here.</p>
+        <label htmlFor="subscriber-email" className="text-sm font-medium">Email</label>
+        <Input id="subscriber-email" onChange={(event) => setEmail(event.target.value)} value={email} name="email" type="email" autoComplete="email" required maxLength={254} disabled={loading} className="h-10 min-w-0 bg-white" placeholder="you@example.com" />
+        <label htmlFor="inquiry-message" className="text-sm font-medium">Message</label>
+        <textarea id="inquiry-message" onChange={(event) => setMessage(event.target.value)} value={message} name="message" rows={4} required maxLength={5000} disabled={loading} className="field resize-y" placeholder="Tell me about your project or what you have in mind…" />
+        <Button type="submit" disabled={loading || !email.trim() || !message.trim()} size="lg" className="w-fit shadow-none">{loading ? "Sending…" : "Send message"}</Button>
+        <p role="status" aria-live="polite" className="text-sm text-muted-foreground">{formResponse}</p>
       </form>
-    </div>
+    </Reveal>
   );
-};
-
-export default SubscriptionSection;
+}

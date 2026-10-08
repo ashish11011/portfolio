@@ -1,93 +1,24 @@
-"use client";
-
+import { Reveal } from "@/components/reveal";
 import Link from "next/link";
-import Image from "next/image";
-import spotifyIcon from "./../../public/spotifyIcon.svg";
 import { cn } from "@/lib/utils";
 
-export const Footer = ({ className }: { className?: string }) => {
-  return (
-    <div
-      className={cn(
-        "  mx-auto max-w-3xl w-full flex flex-col gap-12",
-        className
-      )}
-    >
-      {/* <Spotify /> */}
-      <div className=" flex flex-col sm:flex-row gap-6 py-8 border-t dark:border-gray-600 px-2 sm:px-0">
-        {footerData.map((data) => {
-          return (
-            <div key={data[0].name} className=" w-full flex flex-col gap-6">
-              {data.map((item) => {
-                return (
-                  <Link
-                    href={item.link}
-                    key={item.name}
-                    className=" hover:text-gray-900 dark:hover:text-gray-200  cursor-pointer duration-300 text-gray-600 dark:text-gray-400 w-fit transition-all"
-                  >
-                    {item.name}
-                  </Link>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
-
-const footerData = [
-  [
-    { name: "Home", link: "/" },
-    { name: "Projects", link: "/projects" },
-    // { name: "Dashboard", link: "#" },
-    {
-      name: "Resume",
-      link: "https://drive.google.com/file/d/1-CR4GxZFNYgZs-YYZsouv5OYo1VmVjd5/view",
-    },
-    {
-      name: "Tech talks",
-      link: "/blog",
-    },
-  ],
-  [
-    { name: "GitHub", link: "https://github.com/ashish11011" },
-    { name: "LinkedIn", link: "https://www.linkedin.com/in/ashish-bishnoi/" },
-    { name: "Twitter", link: "https://x.com/bishnoi11011" },
-  ],
-  [
-    { name: "Contact Me", link: "/contact-me" },
-    {
-      name: "Twitter DM",
-      link: "https://twitter.com/messages/compose?recipient_id=bishnoi11011&text=Hi%20Ashish%20Bishnoi",
-    },
-    // { name: "Freelancing", link: "/freelancing" },
-    {
-      name: "Design Inspiration",
-      link: "https://www.sitesforux.com/",
-    },
-  ],
+const footerLinks = [
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/ashish-bishnoi/" },
+  { name: "Twitter", href: "https://x.com/bishnoi11011" },
+  { name: "Contact", href: "/contact-me" },
 ];
 
-const Spotify = () => {
+export function Footer({ className }: { className?: string }) {
   return (
-    <div className=" max-w-3xl w-full mx-auto -mb-8 flex gap-2">
-      <Image
-        src={spotifyIcon}
-        width={25}
-        height={25}
-        alt="spotify icon"
-      ></Image>
-      <Link
-        href={
-          "https://open.spotify.com/playlist/4Xq9YEkGnCFkH7byISgMSm?si=fcda167ec1d84b84&nd=1&dlsi=4329a13a9bdd4328"
-        }
-        target="_blank"
-        className=" dark:text-gray-400"
-      >
-        Spotify
-      </Link>
-    </div>
+    <Reveal as="footer" className={cn("site-shell", className)}>
+      <div className="flex flex-col gap-6 border-t py-8 sm:flex-row sm:items-center sm:justify-between">
+        <p className="eyebrow">Ashish Bishnoi</p>
+        <nav aria-label="Social links" className="flex flex-wrap gap-6">
+          {footerLinks.map(({ name, href }) => (
+            <Link key={name} href={href} className="text-xs text-muted-foreground transition-colors hover:text-foreground">{name}</Link>
+          ))}
+        </nav>
+      </div>
+    </Reveal>
   );
-};
+}

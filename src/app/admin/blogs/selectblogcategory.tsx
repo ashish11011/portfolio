@@ -51,7 +51,6 @@ export const blogCategories = [
   { value: "typescript", label: "TypeScript" },
   { value: "ai", label: "Artificial Intelligence" },
   { value: "ai-tools", label: "AI Tools" },
-  { value: "blockchain", label: "Blockchain" },
   { value: "devops", label: "DevOps" },
   { value: "product-design", label: "Product Design" },
   { value: "mobile-development", label: "Mobile Development" },
@@ -73,7 +72,6 @@ export const blogCategorySummery = [
   { value: "app-development", label: "App Development" },
   { value: "dating", label: "Dating" },
   { value: "ai", label: "Artificial Intelligence" },
-  { value: "blockchain", label: "Blockchain" },
   { value: "e-commerce", label: "E-commerce" },
   { value: "shopify", label: "Shopify" },
 ];

@@ -1,69 +1,77 @@
+import { defaultDescription, pageMetadata, siteName, siteUrl } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
 import NavBar from "@/components/navBar";
 import Image from "next/image";
-
+import Link from "next/link";
+import { ArrowUpRight, Download, Github, Linkedin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { profileLinks } from "@/data/profile";
 import { Footer } from "@/components/footer";
 import ProjectSection from "./projectSection";
 import Experience from "./experienceSection";
+import SkillsSection from "./skillsSection";
+import { skillGroups } from "@/data/skills";
 import SubscriptionSection from "./subscriptionSection";
 import ResumeSection from "./resumeSectino";
 import TestimonialSection from "./testimonialSection";
+import { Reveal } from "@/components/reveal";
+
+export const dynamic = "force-static";
+export const revalidate = 86400;
+export const metadata = pageMetadata({ title: "Software Engineer & Full Stack Developer", description: defaultDescription, path: "/" });
 
 export default function Home() {
   return (
-    <div className="">
-      <div className=" w-full min-h-screen  dark:bg-darkColor flex gap-12 flex-col px-4">
-        <NavBar />
+    <div className="page-stack">
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "Person", name: siteName, url: siteUrl, jobTitle: "Full-Stack Engineer", image: `${siteUrl}/ashish-img.jpg`, sameAs: [profileLinks.github, profileLinks.linkedin, "https://x.com/bishnoi11011"], knowsAbout: skillGroups.flatMap((group) => [...group.skills]) }} />
+      <NavBar />
+      <main className="site-shell flex flex-col gap-20">
         <HeroSection />
         <ProjectSection />
+        <SkillsSection />
         <Experience />
         <TestimonialSection />
         <SubscriptionSection />
         <ResumeSection />
-        <Footer />
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }
 
-const HeroSection = () => {
+function HeroSection() {
   return (
-    <div className=" flex gap-6 flex-col max-w-3xl w-full mx-auto mt-40">
-      <div className="flex justify-between flex-col-reverse sm:flex-row  gap-6 w-full">
-        <h1 className="  pt-2 sm:text-4xl text-4xl text-gray-500 font-semibold gap-2 dark:text-gray-200 ">
-          👋 Hi, I’m <br className=" block sm:hidden" />
-          <span className="text-black">Ashish Bishnoi</span>
-        </h1>
-        <div className="">
-          <div className="p-2 relative w-fit translate-x-2/3 sm:translate-x-0 ">
-            <Image
-              className="rounded"
-              src="/ashish-img.jpg"
-              width={80}
-              height={80}
-              alt="Picture of the author"
-            />
-            <div className="absolute right-0 top-4 h-full w-[0.5px] bg-gradient-to-b from-white via-gray-400 to-white dark:from-gray-800 dark:via-gray-400 dark:to-gray-800 "></div>
-
-            <div className="absolute -top-8 right-0 flex h-8 w-32 flex-col justify-end overflow-hidden">
-              <div className="bottom-0 -mb-[4px] h-1 w-full blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
-
-              <div className="blur-[0.1px] bottom-0 h-[0.5px] w-full [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
-            </div>
-          </div>
+    <section aria-labelledby="intro-heading" className="flex flex-col gap-6">
+      <Reveal onMount>
+        <Image className="rounded-lg" src="/ashish-img.jpg" width={80} height={80} alt="Ashish Bishnoi" priority />
+      </Reveal>
+      <Reveal onMount delay={0.08} className="flex flex-col gap-3">
+        <p className="eyebrow">Ashish Bishnoi</p>
+        <h1 id="intro-heading">Full-Stack Engineer building scalable web products and backend systems.</h1>
+      </Reveal>
+      <Reveal onMount delay={0.16}>
+        <p className="max-w-xl font-light text-muted-foreground">
+          Ex-Microsoft intern with nearly 3 years of experience building production web apps,
+          cloud systems, APIs, payments, and scalable backend services.
+        </p>
+      </Reveal>
+      <Reveal onMount delay={0.24} className="flex flex-wrap items-center gap-3">
+        <Button asChild className="shadow-none"><Link href="/projects">View Projects <ArrowUpRight aria-hidden="true" /></Link></Button>
+        <Button asChild variant="outline" className="shadow-none"><a href={profileLinks.resume} target="_blank" rel="noreferrer" download>Download Resume <Download aria-hidden="true" /></a></Button>
+        <div className="flex items-center gap-2" aria-label="Professional profiles">
+          <a href={profileLinks.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="flex h-11 w-11 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"><Github size={20} aria-hidden="true" /></a>
+          <a href={profileLinks.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="flex h-11 w-11 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"><Linkedin size={20} aria-hidden="true" /></a>
         </div>
-      </div>
-
-      <h2 className=" w-full text-gray-600 text-xl max-w-2xl dark:text-gray-200">
-        Software Engineer & Full Stack Developer - building modern{" "}
-        <span className=" font-semibold">
-          SAAS products, Scalable Web Apps Building
-        </span>
-      </h2>
-
-      <p className=" max-w-xl text-gray-600 dark:text-gray-200 ">
-        Creating fast, scalable apps with Next.js, TypeScript, and AWS - always
-        exploring better deployments.
-      </p>
-    </div>
+      </Reveal>
+      <Reveal onMount delay={0.32} as="section" aria-labelledby="about-heading" className="mt-2 flex flex-col gap-3 border-t pt-6">
+        <h2 id="about-heading" className="text-base">About</h2>
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          I build end-to-end products with Next.js, React, Node.js, and TypeScript,
+          backed by PostgreSQL, Redis, AWS, and Docker. My work spans API development,
+          payments, and cloud infrastructure, with a focus on reliable backend systems,
+          clean UX, performance, and dependable deployments.
+        </p>
+      </Reveal>
+    </section>
   );
-};
+}

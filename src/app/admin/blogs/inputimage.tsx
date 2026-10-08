@@ -22,7 +22,7 @@ function InputImage({ imageSrc, setImageSrc, setImageFile }: any) {
 
   return (
     <div className="w-full">
-      <p className="font-semibold">Blog Image</p>
+      <p className="font-medium">Blog Image</p>
 
       {imageSrc ? (
         <img
@@ -33,7 +33,7 @@ function InputImage({ imageSrc, setImageSrc, setImageFile }: any) {
         />
       ) : (
         <div
-          className="flex size-24 cursor-pointer items-center justify-center rounded-xl border-2"
+          className="flex size-24 cursor-pointer items-center justify-center rounded-lg border-2"
           onClick={handleClick}
         >
           <Plus />

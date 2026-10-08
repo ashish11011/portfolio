@@ -1,76 +1,61 @@
 "use client";
 
-import Link from "next/link";
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { Reveal } from "@/components/reveal";
 
-const NavBar = (params: any) => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [toMaxWidth, setToMaxWidth] = useState(true);
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { Menu, X } from "lucide-react";
+
+const navigation = [
+  { label: "Home", href: "/" },
+  { label: "Projects", href: "/projects" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact-me" },
+];
+
+export default function NavBar() {
+  const pathname = usePathname();
+  const [openPath, setOpenPath] = useState<string | null>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const isOpen = openPath === pathname;
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setScrollPosition(scrollY);
-      if (scrollY > 50) {
-        setToMaxWidth(false);
-      } else {
-        setToMaxWidth(true);
+    if (!isOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpenPath(null);
+        menuButton.current?.focus();
       }
     };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [isOpen]);
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
   return (
-    <div className="backdrop-blur fixed top-0 left-1/2 -translate-x-1/2 w-full z-50">
-      <div
-        className={` ${
-          !toMaxWidth ? "max-w-3xl" : "max-w-4xl"
-        }  w-full duration-300 transition-all justify-between mx-auto pt-6 md:pt-10 flex gap-4 py-4 px-4 sm:px-0 `}
-      >
-        <div className=" ml-auto bg-white dark:bg-darkColor h-fit flex justify-center items-center overflow-hidden rounded-3xl border px-3">
-          <Link
-            href="/"
-            className=" cursor-pointer text-gray-600 py-2 px-3 duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white text-sm font-semibold"
-          >
-            Home
-          </Link>
-          <Link
-            href="/projects"
-            // onClick={() => {
-            //   const projects = document.getElementById("projects");
-            //   if (projects) {
-            //     const offsetTop =
-            //       projects.getBoundingClientRect().top + window.scrollY - 150;
-            //     window.scrollTo({ top: offsetTop, behavior: "smooth" });
-            //   }
-            // }}
-            className=" cursor-pointer text-gray-600 py-2 px-3 duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white text-sm font-semibold"
-          >
-            Projects
-          </Link>
-          <div
-            onClick={() => {
-              const experience = document.getElementById("experience");
-              if (experience) {
-                const offsetTop =
-                  experience.getBoundingClientRect().top + window.scrollY - 150;
-                window.scrollTo({ top: offsetTop, behavior: "smooth" });
-              }
-            }}
-            className=" cursor-pointer text-gray-600 py-2 px-3 duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white text-sm font-semibold"
-          >
-            Experience
-          </div>
+    <Reveal as="header" onMount className="site-shell pt-8">
+      <nav aria-label="Main navigation" className="flex flex-wrap items-center justify-between gap-x-3 border-b pb-6 sm:gap-x-6">
+        <Link href="/" aria-label="Ashish Bishnoi home" className="mr-auto flex h-8 w-8 items-center justify-center rounded-sm border font-mono text-xs font-medium">
+          ab.
+        </Link>
+        <button ref={menuButton} type="button" aria-label={isOpen ? "Close navigation" : "Open navigation"}
+          aria-expanded={isOpen} aria-controls="navigation-links" onClick={() => setOpenPath(isOpen ? null : pathname)}
+          className="flex h-11 w-11 items-center justify-center rounded-md border transition-colors hover:bg-muted sm:hidden">
+          {isOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+        </button>
+        <div id="navigation-links" className={`${isOpen ? "flex mobile-nav-appear" : "hidden"} mt-4 w-full flex-col gap-1 border-t pt-3 sm:order-1 sm:mt-0 sm:flex sm:w-auto sm:flex-row sm:items-center sm:gap-4 sm:border-0 sm:pt-0`}>
+          {navigation.map(({ label, href }) => {
+            const active = href === "/" ? pathname === "/" : !href.includes("#") && pathname.startsWith(href);
+            return (
+              <Link key={href} href={href} aria-current={active ? "page" : undefined} onClick={() => setOpenPath(null)}
+                className={`rounded-sm py-3 text-sm transition-colors hover:text-foreground sm:py-0 ${active ? "font-medium text-foreground" : "text-muted-foreground"}`}>
+                {label}
+              </Link>
+            );
+          })}
         </div>
-      </div>
-    </div>
+      </nav>
+    </Reveal>
   );
-};
-
-export default NavBar;
+}

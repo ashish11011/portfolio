@@ -3,6 +3,19 @@ import { desc, eq, count, not, and, like, ilike } from "drizzle-orm";
 import { blogForm, blogTable } from "../../db/schema";
 import { db } from "@/dbConfig/dbConfig";
 import { revalidatePath } from "next/cache";
+import { isAdminAuthenticated } from "./admin-auth";
+
+async function requireBlogAdmin() {
+  if (!(await isAdminAuthenticated())) throw new Error("Please sign in to the admin panel before changing blogs.");
+}
+
+function refreshBlogPages(slug?: string | null) {
+  revalidatePath("/admin");
+  revalidatePath("/blog");
+  revalidatePath("/blog/page/[page]", "page");
+  if (slug) revalidatePath(`/blog/${slug}`);
+  revalidatePath("/sitemap.xml");
+}
 
 function createSlug(title: string) {
   return title
@@ -25,6 +38,7 @@ export async function insertBlog({
   userName = "",
   isVisible = true,
 }) {
+  await requireBlogAdmin();
   var slug = createSlug(title);
   const isSlugExist = await db
     .select()
@@ -49,8 +63,7 @@ export async function insertBlog({
       slug,
     })
     .returning();
-  revalidatePath("/admin");
-  revalidatePath("/blog");
+  refreshBlogPages(slug);
 
   return response;
 }
@@ -183,6 +196,7 @@ export async function updateBlogByID({
   slug = "",
   isVisible = true,
 }) {
+  await requireBlogAdmin();
   const response = await db
     .update(blogTable)
     .set({
@@ -201,24 +215,22 @@ export async function updateBlogByID({
     .where(eq(blogTable.slug, slug))
     .returning();
 
-  revalidatePath("/admin");
-  revalidatePath(`/blog/${slug}`);
-  revalidatePath(`/blog`);
+  refreshBlogPages(slug);
 
   return response;
 }
 
 export async function toggleBlogVisibility(id: any, isVisible = true) {
+  await requireBlogAdmin();
   const response = await db
     .update(blogTable)
     .set({
       isVisible: isVisible,
     })
     .where(eq(blogTable.id, id))
-    .returning({ isVisible: blogTable.isVisible });
+    .returning({ isVisible: blogTable.isVisible, slug: blogTable.slug });
 
-  revalidatePath("/admin");
-  revalidatePath(`/blog`);
+  refreshBlogPages(response[0]?.slug);
 
   return response;
 }

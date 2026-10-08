@@ -1,213 +1,56 @@
+import { Reveal } from "@/components/reveal";
 import { Footer } from "@/components/footer";
 import NavBar from "@/components/navBar";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { absoluteUrl, pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
 import Link from "next/link";
+import { ProjectGallery } from "@/components/project-gallery";
+import { getPublicProjects } from "@/lib/projects.repository";
+import { ArrowUpRight } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Projects - Ashish Bishnoi",
-  description:
-    "Showcasing my projects built with Next.js, TypeScript, and AWS - focused on performance, scalability, and great user experiences.",
-  openGraph: {
-    title: "Ashish Bishnoi",
-    description:
-      "Showcasing my projects built with Next.js, TypeScript, and AWS - focused on performance, scalability, and great user experiences.",
-    url: "https://www.ashishbishnoi.com/projects",
-    siteName: "Ashish Bishnoi",
-    images: [
-      {
-        url: "https://ik.imagekit.io/hop/1718461831024.jpeg",
-        width: 512,
-        height: 512,
-        alt: "Ashish Bishnoi Logo",
-      },
-    ],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Ashish Bishnoi",
-    description:
-      "Showcasing my projects built with Next.js, TypeScript, and AWS - focused on performance, scalability, and great user experiences.",
-    images: ["https://ik.imagekit.io/hop/1718461831024.jpeg"],
-  },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Projects",
+  description: "Explore web apps, e-commerce platforms, and websites built by Ashish Bishnoi with Next.js, TypeScript, and AWS.",
+  path: "/projects",
+});
 
-const Page = () => {
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
+export default async function Page() {
+  const projects = await getPublicProjects();
   return (
-    <div className="px-4  bg-white dark:bg-darkColor flex flex-col gap-12">
+    <div className="page-stack">
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "CollectionPage", name: "Projects by Ashish Bishnoi", url: absoluteUrl("/projects"), mainEntity: { "@type": "ItemList", itemListElement: projects.map((project, index) => ({ "@type": "ListItem", position: index + 1, name: project.name, url: absoluteUrl(`/projects/${project.slug}`) })) } }} />
       <NavBar />
-      <div className="h-20"></div>
-      <FreelanceHead />
-      <FreelanceProjectList />
+      <main className="site-shell flex flex-col gap-10">
+        <Reveal onMount className="flex flex-col gap-3">
+          <p className="eyebrow">Selected work</p>
+          <h1>Projects</h1>
+          <p className="max-w-xl font-light text-muted-foreground">A collection of products and websites I’ve built for people and businesses.</p>
+        </Reveal>
+        <section aria-label="All projects" className="flex flex-col gap-10">
+          {projects.map((project, index) => (
+            <Reveal as="article" key={project.id} className="flex flex-col gap-6 border-b pb-10 last:border-0 last:pb-0">
+              <ProjectGallery projectName={project.name} images={project.images} priority={index === 0} />
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="eyebrow">{String(index + 1).padStart(2, "0")}</span>
+                  <h2><Link href={`/projects/${project.slug}`} className="hover:underline underline-offset-4">{project.name}</Link></h2>
+                </div>
+                {project.website && <Link href={project.website} target="_blank" rel="noreferrer" className="text-link text-muted-foreground">Visit website <ArrowUpRight size={16} /></Link>}
+              </div>
+              <p className="text-sm text-muted-foreground">{project.summary || project.description}</p>
+              <Link href={`/projects/${project.slug}`} className="text-link w-fit">About the project <ArrowUpRight size={16} /></Link>
+              <ul aria-label="Tech stack" className="flex flex-wrap gap-2">
+                {project.technologies.map((tech) => <li key={tech} className="rounded-sm border px-3 py-1.5 font-mono text-xs text-muted-foreground">{tech}</li>)}
+              </ul>
+            </Reveal>
+          ))}
+        </section>
+      </main>
       <Footer />
     </div>
   );
-};
-
-function FreelanceHead() {
-  return (
-    <div className=" max-w-4xl mx-auto w-full flex flex-col gap-6">
-      <h1 className=" text-5xl font-bold text-gray-800">Projects</h1>
-      <div className=" flex flex-col gap-2">
-        <p className=" text-gray-600">
-          I love building products and web apps for humans. 👑
-        </p>
-      </div>
-    </div>
-  );
 }
-
-function FreelanceProjectList() {
-  return (
-    <div className=" px-4 md:px-0 max-w-4xl mx-auto w-full flex flex-col gap-6 ">
-      <h3 className=" text-3xl font-bold text-gray-800">Featured Projects</h3>
-      <div className=" flex flex-col gap-16">
-        {freelancingData.map((data, index) => (
-          <FreelancingCard key={index} data={data} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function FreelancingCard(props: any) {
-  const { name, description, feature, techs, image, link } = props.data;
-
-  const features = [
-    "Nextjs",
-    "Tailwind",
-    "Remix",
-    "User-fr display",
-    "Secure integration",
-  ];
-  return (
-    <div className=" flex flex-col md:flex-row gap-4 md:gap-8">
-      <div className=" w-full shrink-0 md:w-[32rem] h-auto rounded-2xl shadow-lg overflow-hidden ">
-        <img className=" w-full h-auto object-cover" src={image} alt="" />
-      </div>
-      <div className=" flex flex-col gap-0.5 md:gap-3 ">
-        <h3 className=" text-3xl font-bold text-gray-800">{name}</h3>
-        <Link href={link} className=" underline ">
-          {link}
-        </Link>
-        <div className=" flex flex-col w-full gap-2"></div>
-        <div className=" flex flex-col gap-1 mt-2">
-          <p className=" font-semibold text-gray-800 ">Tect Stack</p>
-          <div className=" flex flex-col gap-2 gap-y-0">
-            {techs.map((tech: string) => (
-              <p className=" text-gray-600">{tech}</p>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-export default Page;
-
-const freelancingData = [
-  {
-    name: "Cozzy Corner",
-    description:
-      "Cozzy Corner is your go-to spot for high-quality anime action figures. Discover a curated collection that brings your favorite characters to life!",
-    feature: [
-      "Curated anime action figure collection",
-      "User-friendly product display",
-      "Secure payment integration",
-    ],
-    techs: ["Nextjs", "Tailwind", "Typescript", "MongoDB", "AWS", "Vercel"],
-    image: "/project/1.png",
-    link: "https://cozzycorner.in",
-  },
-  {
-    name: "Roamify Planners",
-    description:
-      "Build flux wallet where a user can add and create their Solana balance.",
-    feature: [
-      "Create and manage Solana wallet balances",
-      "Secure transaction features",
-      "Easy to use UI for wallet management",
-    ],
-    techs: ["Nextjs", "Tailwind", "Typescript", "Postgress sql", "Vercel"],
-    image: "/project/2.png",
-    link: "https://www.roamifyplanners.in/",
-  },
-  {
-    name: "Haus of Privae",
-    description:
-      "Developed a real-time chat application, allowing users to join specific chat rooms with room IDs for live conversations.",
-    feature: [
-      "Real-time chat functionality",
-      "Custom chat room creation with unique room IDs",
-      "Supports multiple concurrent users in a room",
-    ],
-    techs: [
-      "Nextjs",
-      "Tailwind",
-      "Typescript",
-      "Drizzle",
-      "NextAuth",
-      "Vercel",
-      "AWS",
-    ],
-    image: "/project/3.png",
-    link: "https://www.hausofprivae.com/",
-  },
-  {
-    name: "SBN Infra",
-    description:
-      "Created a web app to prevent fake event entries. Features include participant data collection, QR code generation, and automated email delivery.",
-    feature: [
-      "QR code generation for event entry",
-      "Real-time participant tracking",
-      "Automated email delivery for confirmations",
-    ],
-    techs: ["Nextjs", "Tailwind", "Typescript", "Vercel"],
-    image: "/project/4.png",
-    link: "https://www.sbninfra.in/",
-  },
-  {
-    name: "JB Supreme",
-    description:
-      "Created a website for social welfare and awareness, where people can subscribe to the newsletter and participate in upcoming events.",
-    feature: [
-      "Newsletter subscription integration",
-      "Event participation management",
-      "User-friendly design for social impact",
-    ],
-    techs: ["Nextjs", "Tailwind", "Vercel"],
-    image: "/project/5.png",
-    link: "https://www.superaxlecompany.com/",
-  },
-  {
-    name: "The Adventure Bag Club",
-    description:
-      "Created a website for social welfare and awareness, where people can subscribe to the newsletter and participate in upcoming events.",
-    feature: [
-      "Newsletter subscription integration",
-      "Event participation management",
-      "User-friendly design for social impact",
-    ],
-    techs: ["Nextjs", "Tailwind", "Typescript", "Vercel"],
-    image: "/project/6.png",
-    link: "",
-  },
-  {
-    name: "Codeframe",
-    description:
-      "Created a website for social welfare and awareness, where people can subscribe to the newsletter and participate in upcoming events.",
-    feature: [
-      "Newsletter subscription integration",
-      "Event participation management",
-      "User-friendly design for social impact",
-    ],
-    techs: ["Nextjs", "Tailwind", "Typescript", "Vercel"],
-    image: "/project/7.png",
-    link: "",
-  },
-];

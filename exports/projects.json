@@ -1,0 +1,298 @@
+[
+  {
+    "id": "cozzy-corner",
+    "slug": "cozzy-corner",
+    "name": "Cozzy Corner",
+    "description": "Cozzy Corner is your go-to spot for high-quality anime action figures. Discover a curated collection that brings your favorite characters to life!",
+    "summary": "",
+    "features": [
+      "Curated anime action figure collection",
+      "User-friendly product display",
+      "Secure payment integration"
+    ],
+    "technologies": [
+      "Next.js",
+      "Tailwind CSS",
+      "TypeScript",
+      "MongoDB",
+      "AWS",
+      "Vercel"
+    ],
+    "images": [
+      "/project/1.png"
+    ],
+    "website": "https://cozzycorner.in",
+    "logo": "https://s3.ap-south-1.amazonaws.com/cozzy.corner/cozzy-corner-logo-dark.png",
+    "content": {
+      "type": "doc",
+      "content": []
+    },
+    "featuredOrder": 1,
+    "sortOrder": 0,
+    "isVisible": true
+  },
+  {
+    "id": "roamify-planners",
+    "slug": "roamify-planners",
+    "name": "Roamify Planners",
+    "description": "Built a travel planning website where travelers can explore tour packages and submit inquiries, with a clear interface that makes planning their next trip easier.",
+    "summary": "A travel planning platform for exploring tour packages and submitting travel inquiries.",
+    "features": [
+      "Tour package browsing",
+      "Travel inquiry submissions",
+      "Easy-to-navigate travel planning experience"
+    ],
+    "technologies": [
+      "Next.js",
+      "Tailwind CSS",
+      "TypeScript",
+      "PostgreSQL",
+      "Vercel",
+      "Prisma"
+    ],
+    "images": [
+      "/project/2.png"
+    ],
+    "website": "https://www.roamifyplanners.in/",
+    "logo": "https://www.roamifyplanners.in/logo-black.png",
+    "content": {
+      "type": "doc",
+      "content": []
+    },
+    "featuredOrder": 3,
+    "sortOrder": 1,
+    "isVisible": true
+  },
+  {
+    "id": "haus-of-privae",
+    "slug": "haus-of-privae",
+    "name": "Haus of Privae",
+    "description": "Developed a real-time chat application, allowing users to join specific chat rooms with room IDs for live conversations.",
+    "summary": "Developed a luxury e-commerce platform for Haus of Privae, enabling seamless shopping and custom garment experiences with modern, elegant UI.",
+    "features": [
+      "Real-time chat functionality",
+      "Custom chat room creation with unique room IDs",
+      "Supports multiple concurrent users in a room"
+    ],
+    "technologies": [
+      "Next.js",
+      "Tailwind CSS",
+      "TypeScript",
+      "Drizzle",
+      "NextAuth",
+      "Vercel",
+      "AWS",
+      "ImageKit",
+      "PostgreSQL"
+    ],
+    "images": [
+      "/project/3.png"
+    ],
+    "website": "https://www.hausofprivae.com/",
+    "logo": "https://ik.imagekit.io/hop/logo-nobg.png",
+    "content": {
+      "type": "doc",
+      "content": []
+    },
+    "featuredOrder": 0,
+    "sortOrder": 2,
+    "isVisible": true
+  },
+  {
+    "id": "sbn-infra",
+    "slug": "sbn-infra",
+    "name": "SBN Infra",
+    "description": "Created a web app to prevent fake event entries. Features include participant data collection, QR code generation, and automated email delivery.",
+    "summary": "",
+    "features": [
+      "QR code generation for event entry",
+      "Real-time participant tracking",
+      "Automated email delivery for confirmations"
+    ],
+    "technologies": [
+      "Next.js",
+      "Tailwind CSS",
+      "TypeScript",
+      "Vercel"
+    ],
+    "images": [
+      "/project/4.png"
+    ],
+    "website": "https://www.sbninfra.in/",
+    "logo": "",
+    "content": {
+      "type": "doc",
+      "content": []
+    },
+    "featuredOrder": null,
+    "sortOrder": 3,
+    "isVisible": true
+  },
+  {
+    "id": "jb-supreme",
+    "slug": "jb-supreme",
+    "name": "JB Supreme",
+    "description": "Created a website for social welfare and awareness, where people can subscribe to the newsletter and participate in upcoming events.",
+    "summary": "",
+    "features": [
+      "Newsletter subscription integration",
+      "Event participation management",
+      "User-friendly design for social impact"
+    ],
+    "technologies": [
+      "Next.js",
+      "Tailwind CSS",
+      "Vercel"
+    ],
+    "images": [
+      "/project/5.png"
+    ],
+    "website": "https://www.superaxlecompany.com/",
+    "logo": "",
+    "content": {
+      "type": "doc",
+      "content": []
+    },
+    "featuredOrder": null,
+    "sortOrder": 4,
+    "isVisible": true
+  },
+  {
+    "id": "the-adventure-bag-club",
+    "slug": "the-adventure-bag-club",
+    "name": "The Adventure Bag Club",
+    "description": "Created a website for social welfare and awareness, where people can subscribe to the newsletter and participate in upcoming events.",
+    "summary": "",
+    "features": [
+      "Newsletter subscription integration",
+      "Event participation management",
+      "User-friendly design for social impact"
+    ],
+    "technologies": [
+      "Next.js",
+      "Tailwind CSS",
+      "TypeScript",
+      "Vercel"
+    ],
+    "images": [
+      "/project/6.png"
+    ],
+    "website": "",
+    "logo": "",
+    "content": {
+      "type": "doc",
+      "content": []
+    },
+    "featuredOrder": null,
+    "sortOrder": 5,
+    "isVisible": true
+  },
+  {
+    "id": "codeframe",
+    "slug": "codeframe",
+    "name": "Codeframe",
+    "description": "Created a website for social welfare and awareness, where people can subscribe to the newsletter and participate in upcoming events.",
+    "summary": "",
+    "features": [
+      "Newsletter subscription integration",
+      "Event participation management",
+      "User-friendly design for social impact"
+    ],
+    "technologies": [
+      "Next.js",
+      "Tailwind CSS",
+      "TypeScript",
+      "Vercel"
+    ],
+    "images": [
+      "/project/7.png"
+    ],
+    "website": "",
+    "logo": "",
+    "content": {
+      "type": "doc",
+      "content": []
+    },
+    "featuredOrder": null,
+    "sortOrder": 6,
+    "isVisible": true
+  },
+  {
+    "id": "cahl-chitrakaar",
+    "slug": "cahl-chitrakaar",
+    "name": "Cahl Chitrakaar",
+    "description": "Chal Chitrakaar is a portfolio website for a photographer showcasing expertise in wedding shoots, corporate photography, and a diverse range of professional photography services.",
+    "summary": "",
+    "features": [],
+    "technologies": [
+      "Next.js",
+      "Tailwind CSS",
+      "TypeScript",
+      "MongoDB",
+      "AWS",
+      "Vercel"
+    ],
+    "images": [],
+    "website": "https://www.chalchitrakaar.in/",
+    "logo": "https://s3.ap-south-1.amazonaws.com/chal.chitrakaar/logo+dark.PNG",
+    "content": {
+      "type": "doc",
+      "content": []
+    },
+    "featuredOrder": 2,
+    "sortOrder": 7,
+    "isVisible": true
+  },
+  {
+    "id": "entry-management-system-with-qr-integration",
+    "slug": "entry-management-system-with-qr-integration",
+    "name": "Entry Management System with QR Integration",
+    "description": "Created a web app to prevent fake event entries. Features include participant data collection, QR code generation, and automated email delivery",
+    "summary": "",
+    "features": [],
+    "technologies": [
+      "Next.js",
+      "Tailwind CSS",
+      "TypeScript",
+      "Prisma",
+      "NextAuth",
+      "Vercel"
+    ],
+    "images": [],
+    "website": "",
+    "logo": "",
+    "content": {
+      "type": "doc",
+      "content": []
+    },
+    "featuredOrder": null,
+    "sortOrder": 8,
+    "isVisible": true
+  },
+  {
+    "id": "abhyudaya",
+    "slug": "abhyudaya",
+    "name": "Abhyudaya",
+    "description": "Created a website for social welfare and awareness, where people can subscribe to the newsletter and participate in upcoming events.",
+    "summary": "",
+    "features": [],
+    "technologies": [
+      "HTML",
+      "Tailwind CSS",
+      "JavaScript",
+      "MongoDB",
+      "JWT",
+      "Vercel"
+    ],
+    "images": [],
+    "website": "",
+    "logo": "",
+    "content": {
+      "type": "doc",
+      "content": []
+    },
+    "featuredOrder": null,
+    "sortOrder": 9,
+    "isVisible": true
+  }
+]

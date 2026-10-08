@@ -1,72 +1,31 @@
-"use client";
-
 import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
+  Pagination, PaginationContent, PaginationItem, PaginationLink,
+  PaginationNext, PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useRouter, useSearchParams } from "next/navigation";
 
-export function BlogPagination({ page, totalPages, limit }: any) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+export const blogPageUrl = (page: number) => page === 1 ? "/blog" : `/blog/page/${page}`;
 
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-
-  const handlePageChange = (direction: any) => {
-    let newPage = page;
-
-    if (direction === "prev" && page > 1) {
-      newPage = page - 1;
-    } else if (direction === "next" && page < totalPages) {
-      newPage = page + 1;
-    } else {
-      newPage = direction;
-    }
-
-    const params = new URLSearchParams(searchParams.toString());
-
-    params.set("page", newPage.toString());
-    params.set("limit", limit.toString());
-
-    router.push(`?${params.toString()}`);
-  };
-
+export function BlogPagination({ page, totalPages }: { page: number; totalPages: number }) {
+  if (totalPages <= 1) return null;
+  // Keep pagination usable on mobile even when the archive grows.
+  const numbers = Array.from(new Set([1, page - 1, page, page + 1, totalPages]))
+    .filter((number) => number >= 1 && number <= totalPages).sort((a, b) => a - b);
   return (
     <Pagination>
-      <PaginationContent>
+      <PaginationContent className="flex-wrap">
         <PaginationItem>
-          <PaginationPrevious
-            onClick={() => handlePageChange("prev")}
-            className={page === 1 ? "pointer-events-none opacity-50" : ""}
-          />
+          <PaginationPrevious href={blogPageUrl(Math.max(1, page - 1))} rel={page > 1 ? "prev" : undefined}
+            aria-disabled={page === 1} tabIndex={page === 1 ? -1 : undefined}
+            className={page === 1 ? "pointer-events-none opacity-50" : ""} />
         </PaginationItem>
-
-        {pageNumbers.map((pagenum, idx) => {
-          return (
-            <PaginationItem key={idx} onClick={() => handlePageChange(pagenum)}>
-              <div
-                className={
-                  pagenum === page
-                    ? "pointer-events-none px-4 py-2 text-red-700 opacity-50"
-                    : "px-4 py-2 text-sm"
-                }
-              >
-                {pagenum}
-              </div>
-            </PaginationItem>
-          );
-        })}
-
+        {numbers.map((number, index) => <PaginationItem key={number} className="flex items-center">
+          {index > 0 && number - numbers[index - 1] > 1 && <span aria-hidden="true" className="px-2">…</span>}
+          <PaginationLink href={blogPageUrl(number)} isActive={number === page} aria-label={`Page ${number}`}>{number}</PaginationLink>
+        </PaginationItem>)}
         <PaginationItem>
-          <PaginationNext
-            onClick={() => handlePageChange("next")}
-            className={
-              page === totalPages ? "pointer-events-none opacity-50" : ""
-            }
-          />
+          <PaginationNext href={blogPageUrl(Math.min(totalPages, page + 1))} rel={page < totalPages ? "next" : undefined}
+            aria-disabled={page === totalPages} tabIndex={page === totalPages ? -1 : undefined}
+            className={page === totalPages ? "pointer-events-none opacity-50" : ""} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
