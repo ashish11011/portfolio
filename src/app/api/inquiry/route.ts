@@ -11,6 +11,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Please submit a valid email and message." }, { status: 400 });
   }
   const data = input as Record<string, unknown>;
+  const name = typeof data.name === "string" ? data.name.trim() : "";
+  if (data.name !== undefined && (typeof data.name !== "string" || !name || name.length > 200)) {
+    return NextResponse.json({ message: "Please enter a name of up to 200 characters." }, { status: 400 });
+  }
   const email = typeof data.email === "string" ? data.email.trim() : "";
   const message = typeof data.message === "string" ? data.message.trim() : "";
   if (!email || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -24,10 +28,11 @@ export async function POST(request: NextRequest) {
   }
   try {
     // Use the existing inquiry table; the email and message are stored together.
-    await db.insert(blogForm).values({ email, message });
+    await db.insert(blogForm).values({ email, message, ...(name ? { name } : {}) });
   } catch {
     return NextResponse.json({ message: "Couldn’t save your message. Please try again." }, { status: 500 });
   }
   revalidatePath("/admin");
+  revalidatePath("/admin/messages");
   return NextResponse.json({ message: "Thanks! Your message has been received." });
 }

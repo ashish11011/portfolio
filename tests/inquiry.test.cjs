@@ -37,14 +37,26 @@ test('stores a trimmed email and message together and refreshes the admin view',
   assert.equal(api.writes.length, 1);
   assert.equal(api.writes[0].email, 'visitor@example.com');
   assert.equal(api.writes[0].message, 'I need a web app.');
-  assert.deepEqual(api.invalidated, ['/admin']);
+  assert.deepEqual(api.invalidated, ['/admin', '/admin/messages']);
+});
+
+test('contact submissions retain the trimmed name with email and message', async () => {
+  const api = inquiry();
+  const response = await api.submit({ name: ' Visitor ', email: ' visitor@example.com ', message: ' Hello from the contact form. ' });
+  assert.equal(response.status, 200);
+  assert.equal(api.writes[0].name, 'Visitor');
+  assert.equal(api.writes[0].email, 'visitor@example.com');
+  assert.equal(api.writes[0].message, 'Hello from the contact form.');
+  assert(api.invalidated.includes('/admin/messages'));
 });
 
 test('invalid email, empty or oversized messages, and malformed JSON never write', async () => {
   const api = inquiry();
   for (const data of [null, [], {}, { email: 'bad-email', message: 'Hello' },
     { email: 'a@example.com', message: '  ' }, { email: 'a@example.com', message: 'x'.repeat(5001) },
-    { email: 'x'.repeat(255) + '@example.com', message: 'Hello' }, { email: 'a@example.com', message: 123 }]) {
+    { email: 'x'.repeat(255) + '@example.com', message: 'Hello' }, { email: 'a@example.com', message: 123 },
+    { name: 123, email: 'a@example.com', message: 'Hello' }, { name: ' ', email: 'a@example.com', message: 'Hello' },
+    { name: 'x'.repeat(201), email: 'a@example.com', message: 'Hello' }]) {
     assert.equal((await api.submit(data)).status, 400);
   }
   assert.equal((await api.POST(new Request('http://localhost/api/inquiry', { method: 'POST', body: '{' }))).status, 400);

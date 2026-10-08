@@ -21,7 +21,6 @@ import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Youtube from "@tiptap/extension-youtube";
 import Table from "@tiptap/extension-table";
-import Code from "@tiptap/extension-code";
 import TableRow from "@tiptap/extension-table-row";
 import TableHeader from "@tiptap/extension-table-header";
 import TableCell from "@tiptap/extension-table-cell";
@@ -59,8 +58,10 @@ const TiptapEditor = ({ data }: any) => {
   const [imageSrc, setImageSrc] = useState(data?.image || "");
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [previewHtml, setPreviewHtml] = useState(data?.data || "<p>Hello World! 🌎️</p>");
 
   const editor: any = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({
         heading: true as any,
@@ -72,7 +73,6 @@ const TiptapEditor = ({ data }: any) => {
         controls: false,
         nocookie: true,
       }),
-      Code,
       Underline,
       Link.configure({
         openOnClick: false,
@@ -89,15 +89,14 @@ const TiptapEditor = ({ data }: any) => {
       Image,
     ],
     content: data?.data || "<p>Hello World! 🌎️</p>",
+    editorProps: { attributes: { class: "tiptap blog-content min-h-80 p-6 focus:outline-none", role: "textbox", "aria-label": "Blog content", "aria-multiline": "true" } },
+    onUpdate: ({ editor }) => setPreviewHtml(editor.getHTML()),
   });
-
-  const [savedHtml, setSavedHtml] = useState("");
 
   const handleSave = async () => {
     setLoading(true);
     if (editor) {
       const html = editor.getHTML();
-      setSavedHtml(html);
 
       // https://av-blog.s3.ap-south-1.amazonaws.com
 
@@ -259,8 +258,9 @@ const TiptapEditor = ({ data }: any) => {
   if (!editor) return null;
 
   return (
-    <div className="mx-auto w-full max-w-7xl">
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
       <Toaster />
+      <h1>{data ? "Edit blog" : "New blog"}</h1>
       <PInput
         title={"Blog Title"}
         placeholder="Enter Blog Title"
@@ -268,7 +268,7 @@ const TiptapEditor = ({ data }: any) => {
         value={title}
         onChange={(e: any) => setTitle(e.target.value)}
       />
-      <div className="mb-3 flex gap-4">
+      <div className="grid gap-6 sm:grid-cols-2">
         <InputImage
           imageSrc={imageSrc}
           setImageSrc={setImageSrc}
@@ -440,7 +440,6 @@ const TiptapEditor = ({ data }: any) => {
               const file = input.files?.[0];
               const s3URL = await editorImageUpload(file);
               let finalImageSrc = s3URL;
-              setSavedHtml((prev: any) => ({ ...prev, s3URL }));
               if (!file) return;
 
               const url = URL.createObjectURL(file); // Temporary URL
@@ -465,23 +464,21 @@ const TiptapEditor = ({ data }: any) => {
           Delete Table
         </Button>
       </div>
-      <div className=" mt-12 grid grid-cols-2 gap-6">
-        <div className="mb-4 rounded-md border-2  max-h-screen overflow-y-auto bg-white p-1">
+      <div className="grid min-w-0 gap-6 lg:grid-cols-2">
+        <section aria-labelledby="blog-editor-heading" className="min-w-0 overflow-hidden rounded-lg border bg-white">
+          <h2 id="blog-editor-heading" className="border-b px-6 py-4 text-base">Content editor</h2>
           <EditorContent className="[&>*]:focus:outline-none" editor={editor} />
-        </div>
-        <div className="prose tiptap max-h-screen overflow-y-auto  ">
-          {/* <h3 className="mb-2 font-semibold">Preview (Saved HTML):</h3> */}
+        </section>
+        <section aria-labelledby="blog-preview-heading" className="min-w-0 rounded-lg border bg-white">
+          <h2 id="blog-preview-heading" className="border-b px-6 py-4 text-base">Live preview</h2>
           <div
-            className="tiptap [&>h1]:bg-red-100 [&>h2]:bg-yellow-100 [&>p]:bg-green-100 [&>*]:whitespace-pre-wrap [&>p>code]:bg-gray-100  [&>p>code]:border-l-4 [&>p>code]:py-0.5  [&>p>code]:pl-3  [&>p>code]:block 
-            
-            [&>p>pre]:bg-gray-100  [&>p>pre]:border-l-4 [&>p>pre]:py-0.5  [&>p>pre]:pl-3  [&>p>pre]:block
-            "
-            dangerouslySetInnerHTML={{ __html: editor.getHTML() }}
+            className="tiptap blog-content break-words p-6"
+            dangerouslySetInnerHTML={{ __html: previewHtml }}
           />
-        </div>
+        </section>
       </div>
-      <Button disabled={loading} onClick={handleSave}>
-        Save
+      <Button className="w-fit" disabled={loading} onClick={handleSave}>
+        {loading ? "Saving…" : "Save blog"}
       </Button>
     </div>
   );

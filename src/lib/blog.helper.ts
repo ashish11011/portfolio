@@ -11,6 +11,7 @@ async function requireBlogAdmin() {
 
 function refreshBlogPages(slug?: string | null) {
   revalidatePath("/admin");
+  revalidatePath("/admin/blogs");
   revalidatePath("/blog");
   revalidatePath("/blog/page/[page]", "page");
   if (slug) revalidatePath(`/blog/${slug}`);
@@ -238,6 +239,7 @@ export async function toggleBlogVisibility(id: any, isVisible = true) {
 export async function submitBlogForm(data: any) {
   const response = await db.insert(blogForm).values(data).returning();
   revalidatePath("/admin");
+  revalidatePath("/admin/messages");
   return response;
 }
 

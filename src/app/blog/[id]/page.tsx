@@ -65,7 +65,7 @@ export default async function Page({ params }: Props) {
           </Reveal>
           {post.image && <Image src={post.image} width={800} height={450} alt={post.title} className="h-auto w-full rounded-lg border" sizes="(max-width: 768px) 100vw, 704px" priority />}
           <TableOfContents slug={slug} />
-          <div className="tiptap break-words" dangerouslySetInnerHTML={{ __html: post.data }} />
+          <div className="tiptap blog-content break-words" dangerouslySetInnerHTML={{ __html: post.data }} />
         </article>
         <div className="site-shell"><ContactForm /></div>
       </main>

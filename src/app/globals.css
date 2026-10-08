@@ -76,6 +76,16 @@
   .tiptap iframe { @apply max-w-full; }
   .tiptap table { @apply w-full border-collapse text-sm; }
   .tiptap th, .tiptap td { @apply border p-3 text-left; }
+
+  .blog-content { @apply leading-7; }
+  .blog-content > * + * { margin-top: var(--space-6); }
+  .blog-content h1, .blog-content h2 { @apply mt-10; }
+  .blog-content h3, .blog-content h4 { @apply mt-8; }
+  .blog-content > :first-child { margin-top: 0; }
+  .blog-content :is(h1, h2, h3, h4) + * { margin-top: var(--space-4); }
+  .blog-content li > p { margin: 0; }
+  .blog-content blockquote > * + * { margin-top: var(--space-4); }
+  .blog-content pre code { @apply bg-transparent p-0; }
 }
 
 @keyframes gallery-appear {

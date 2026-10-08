@@ -23,7 +23,7 @@ function ContactForm({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
     }));
   }
   const notify = () =>
-    toast("🦄 Thank you for contacting me", {
+    toast("Thank you! Your message has been received.", {
       position: "bottom-right",
       autoClose: 4000,
       hideProgressBar: false,
@@ -36,8 +36,9 @@ function ContactForm({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
 
   async function handleFormSubmittion(e: any) {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
-    if (formData.name && formData.email && formData.message) {
+    try {
       const response = await fetch("/api/contact-me", {
         method: "POST",
         headers: {
@@ -45,6 +46,7 @@ function ContactForm({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
         },
         body: JSON.stringify(formData),
       });
+      const result = await response.json();
       if (response.ok) {
         notify();
         setFormData({
@@ -52,9 +54,14 @@ function ContactForm({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
           email: "",
           message: "",
         });
+      } else {
+        toast.error(result.message || "Couldn’t send your message. Please try again.");
       }
+    } catch {
+      toast.error("Couldn’t send your message. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
   return (
     <Reveal as="section" aria-labelledby="contact-heading" className="w-full">
@@ -66,16 +73,16 @@ function ContactForm({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="flex flex-col gap-2">
             <label htmlFor="contact-name" className="text-sm font-medium">Name</label>
-            <input id="contact-name" onChange={handleInputChange} type="text" name="name" value={formData.name} placeholder="Your name" autoComplete="name" required className="field" />
+            <input id="contact-name" onChange={handleInputChange} type="text" name="name" value={formData.name} placeholder="Your name" autoComplete="name" required maxLength={200} disabled={loading} className="field" />
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="contact-email" className="text-sm font-medium">Email</label>
-            <input id="contact-email" type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="you@example.com" autoComplete="email" required className="field" />
+            <input id="contact-email" type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="you@example.com" autoComplete="email" required maxLength={254} disabled={loading} className="field" />
           </div>
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="contact-message" className="text-sm font-medium">Message</label>
-          <textarea id="contact-message" placeholder="Tell me a little about your project…" name="message" value={formData.message} onChange={handleInputChange} rows={5} required className="field resize-y" />
+          <textarea id="contact-message" placeholder="Tell me a little about your project…" name="message" value={formData.message} onChange={handleInputChange} rows={5} required maxLength={5000} disabled={loading} className="field resize-y" />
         </div>
         <Button type="submit" disabled={loading} size="lg" className="w-fit">
           {loading && <LoaderCircle className="animate-spin" aria-hidden="true" />}
