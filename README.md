@@ -5,7 +5,7 @@ It highlights my skills, projects, testimonials, freelancing work, and provides 
 
 🚀 Tech Stack
 
-Next.js 14
+Next.js 16.4
 React
 Tailwind CSS
 TypeScript
